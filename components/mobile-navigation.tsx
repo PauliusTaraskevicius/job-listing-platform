@@ -25,7 +25,7 @@ export const MobileNavigation = ({ path }: Props) => {
         <ModeToggle />
         {path === "/hiring" ? null : (
           <Link href="/hiring">
-            <Button size="default" className="rounded-2xl text-sm">
+            <Button size="default" className="rounded-2xl text-sm bg-neutral-950 hover:bg-neutral-950/90">
               Įdėti skelbimą - 5&euro;
             </Button>
           </Link>

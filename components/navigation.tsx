@@ -23,7 +23,7 @@ export const Navigation = () => {
   return (
     <div className="hidden lg:flex justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2">
       <Link href="/" className="flex items-center gap-1 cursor-pointer">
-        <BriefcaseBusiness className="size-11" />
+        <BriefcaseBusiness className="size-11 text-neutral-950" />
         DarbasMan
       </Link>
 
@@ -36,7 +36,7 @@ export const Navigation = () => {
         </div>
         {path === "/hiring" ? null : (
           <Link href="/hiring">
-            <Button size="xl" className="rounded-2xl text-base">
+            <Button size="xl" className="rounded-2xl text-base bg-neutral-950 hover:bg-neutral-950/90">
               Įdėti skelbimą - 5&euro;
             </Button>
           </Link>
