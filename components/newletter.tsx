@@ -1,64 +1,77 @@
 "use client";
 
-import { subscribe } from "@/actions/subscribe";
+import axios from "axios";
+import { FormEvent, useState } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { Input } from "./ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+import { useToast } from "./ui/use-toast";
 
 export const Newsletter = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "success" | "error" | "loading" | "idle"
+  >("idle");
+  const [responseMsg, setResponseMsg] = useState<string>("");
+  const [statusCode, setStatusCode] = useState<number>();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const { toast } = useToast();
+
+  async function handleSubscribe(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const response = await axios.post("/api/subscribe", { email });
+      setStatus("success");
+      toast({
+        title: "Naujienlaiškis užprenumeruotas sėkmingai!",
+      });
+      setStatusCode(response.status);
+      setEmail("");
+      setResponseMsg(response.data.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setStatus("error");
+        toast({
+          variant: "destructive",
+          title: "Įvyko klaida. Bandykite dar kartą.",
+        });
+        setStatusCode(error.response?.status);
+        setResponseMsg(error.response?.data.error);
+      }
+    }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
+    <>
+      <form className="w-full" onSubmit={handleSubscribe}>
+        <div className="flex items-center space-x-2">
+          <Input
+            className={`${statusCode === 400 && "border-red-500"} `}
+            type="email"
+            placeholder="Gaukite naujausius darbo pasiūlymus el.paštu."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={status === "loading"}
+          />
+          <Button
+            className="bg-neutral-950 hover:bg-neutral-950/90 dark:bg-white"
+            type="submit"
+            disabled={status === "loading"}
+          >
+            Prenumeruoti
+          </Button>
+        </div>
+        <div className="server-message pt-4 text-green-600">
+          {status === "success" ? (
+            <p className="text-green-600">{responseMsg}</p>
+          ) : null}
+          {status === "error" ? (
+            <p className="text-red-600">{responseMsg}</p>
+          ) : null}
+        </div>
       </form>
-    </Form>
+    </>
   );
 };

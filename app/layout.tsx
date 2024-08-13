@@ -9,6 +9,8 @@ import { Navigation } from "@/components/navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 
+import { Toaster } from "@/components/ui/toaster";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -34,7 +36,8 @@ export default function RootLayout({
             >
               <Wrapper>
                 <Navigation />
-                {children}
+                <main>{children}</main>
+                <Toaster />
               </Wrapper>
             </ThemeProvider>
           </QueryProvider>
