@@ -12,7 +12,7 @@ type Props = {
 
 export const MobileNavigation = ({ path }: Props) => {
   return (
-    <div className="flex flex-row justify-between items-center p-2.5">
+    <div className="flex flex-row justify-between items-center sticky top-0 p-2.5 backdrop-blur-lg transition-all">
       <Button
         asChild
         variant="outline"
