@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
@@ -39,7 +40,7 @@ export const Jobs = ({ job }: Props) => {
         <CardDescription className="flex flex-col space-y-1">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-xl text-black font-semibold leading-none tracking-tight">
+              <h1 className="text-xl text-black dark:text-white font-semibold leading-none tracking-tight">
                 {title}
               </h1>
             </div>
@@ -51,7 +52,7 @@ export const Jobs = ({ job }: Props) => {
               ))}
             </div>
           </div>
-          <span className="font-normal text-black text-base leading-none tracking-normal">
+          <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
             {location}
           </span>
         </CardDescription>
