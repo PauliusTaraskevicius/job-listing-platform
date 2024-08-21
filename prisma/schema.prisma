@@ -9,8 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -19,15 +19,15 @@ enum Role {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  firstName String?
-  lastName String?
-  imageUrl String?
-  clerkUserId String @unique
-  role Role @default(USER)
+  id          String  @id @default(uuid())
+  email       String  @unique
+  firstName   String?
+  lastName    String?
+  imageUrl    String?
+  clerkUserId String  @unique
+  role        Role    @default(USER)
 
-  job Job[]
+  job      Job[]
   category Category[]
 
   createdAt DateTime @default(now())
@@ -35,13 +35,13 @@ model User {
 }
 
 model Category {
-  id String @id @default(uuid())
+  id       String @id @default(uuid())
   category String
 
   job Job[]
 
   userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,22 +49,21 @@ model Category {
   @@index([userId])
 }
 
-
 model Job {
-  id String @id @default(uuid())
-  title String
-  company String
-  location String
+  id          String   @id @default(uuid())
+  title       String
+  company     String
+  location    String
   description String
-  tags String[]
-  premium Boolean @default(false)
-  remote Boolean? @default(false)
+  tags        String[]
+  premium     Boolean  @default(false)
+  remote      Boolean? @default(false)
 
   userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   categoryId String
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

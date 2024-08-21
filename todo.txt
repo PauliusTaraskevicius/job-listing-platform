@@ -1,0 +1,2 @@
+- /hiring => hiring forma
+- admin panel

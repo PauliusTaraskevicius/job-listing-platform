@@ -15,6 +15,9 @@ import {
 
 import { Job } from "@/lib/types";
 import { Jobs } from "./jobs/jobs";
+import { notFound } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
+import { Card, CardHeader } from "./ui/card";
 
 type Props = {
   jobsData: Job[];
@@ -47,6 +50,15 @@ export const PaginationSection = ({ jobsData }: Props) => {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  if (!currentItems || !pages) {
+    return <>
+      <PaginationDataPlaceholder />
+      <PaginationDataPlaceholder />
+      <PaginationDataPlaceholder />
+
+    </>
+  }
 
   return (
     <>
@@ -94,3 +106,29 @@ export const PaginationSection = ({ jobsData }: Props) => {
     </>
   );
 };
+
+
+const PaginationDataPlaceholder = () => {
+  return (
+    <div className="w-full p-2">
+      <div className="flex flex-col">
+
+        <Skeleton className="flex justify-between h-[130px] lg:h-[170px] border border-zinc-200 dark:border-0  overflow-hidden">
+          <div>
+          <Skeleton className="w-[200px] h-[20px] lg:w-[500px] lg:h-[30px] m-4 bg-zinc-200" />
+          <Skeleton className="w-[150px] h-[20px] lg:w-[300px] lg:h-[30px] m-4 bg-zinc-200" />
+          <Skeleton className="w-[100px] h-[20px] lg:w-[200px] lg:h-[30px] m-4 bg-zinc-200" />
+          </div>
+          <div className="flex justify-center items-center p-4 space-x-4">
+            <Skeleton className="w-[30px] lg:w-10 h-5 border rounded-xl bg-zinc-200"/>
+            <Skeleton className="w-[30px] lg:w-10 h-5  border rounded-xl bg-zinc-200"/>
+            <Skeleton className="w-[30px] lg:w-10 h-5  border rounded-xl bg-zinc-200"/>
+            <Skeleton className="w-[30px] lg:w-10 h-5  border rounded-xl bg-zinc-200"/>
+          </div>
+        </Skeleton>
+        
+
+      </div>
+    </div>
+  )
+}
