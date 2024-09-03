@@ -6,3 +6,8 @@ export interface Job {
   tags: Array<string>;
   description: string;
 }
+
+export interface CategoryType {
+  id: number;
+  title: string;
+}

@@ -35,8 +35,8 @@ model User {
 }
 
 model Category {
-  id       String @id @default(uuid())
-  category String
+  id    String @id @default(uuid())
+  title String
 
   job Job[]
 
