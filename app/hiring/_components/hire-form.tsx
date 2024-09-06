@@ -21,9 +21,11 @@ import { createCategorySchema } from "@/actions/category/validation";
 import { useMutation } from "@tanstack/react-query";
 import { createCategory } from "@/actions/category";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 export const HireForm = () => {
   const { toast } = useToast();
+  const route = useRouter();
 
   const form = useForm<z.infer<typeof createCategorySchema>>({
     resolver: zodResolver(createCategorySchema),
@@ -38,7 +40,8 @@ export const HireForm = () => {
     onSuccess: () => {
       toast({
         title: "Kategorija sėkmingai sukurta.",
-      });
+      }),
+        route.push("/");
     },
     onError: () => {
       toast({
@@ -49,7 +52,6 @@ export const HireForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof createCategorySchema>) {
-    console.log(values);
     addCategory(values);
   }
 
@@ -63,13 +65,19 @@ export const HireForm = () => {
             <FormItem>
               <FormLabel>Kategorija</FormLabel>
               <FormControl>
-                <Input placeholder="kategorija" {...field} />
+                <Input
+                  placeholder="Kategorija"
+                  {...field}
+                  disabled={isPending}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Sukurti kategoriją</Button>
+        <Button type="submit" disabled={isPending}>
+          Sukurti kategoriją
+        </Button>
       </form>
     </Form>
   );

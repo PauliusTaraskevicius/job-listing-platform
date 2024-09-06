@@ -20,11 +20,11 @@ enum Role {
 
 model User {
   id          String  @id @default(uuid())
+  clerkUserId String  @unique
   email       String  @unique
   firstName   String?
   lastName    String?
-  imageUrl    String?
-  clerkUserId String  @unique
+  imageUrl    String? @db.Text
   role        Role    @default(USER)
 
   job      Job[]
@@ -36,31 +36,31 @@ model User {
 
 model Category {
   id    String @id @default(uuid())
-  title String
+  title String @db.Text
 
   job Job[]
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [clerkUserId], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId])
+  @@index([creatorId])
 }
 
 model Job {
   id          String   @id @default(uuid())
-  title       String
-  company     String
-  location    String
-  description String
+  title       String   @db.Text
+  company     String   @db.Text
+  location    String   @db.Text
+  description String   @db.Text
   tags        String[]
   premium     Boolean  @default(false)
   remote      Boolean? @default(false)
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -69,5 +69,5 @@ model Job {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-  @@index([userId])
+  @@index([authorId])
 }

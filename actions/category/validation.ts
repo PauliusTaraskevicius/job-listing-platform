@@ -11,4 +11,4 @@ export const createCategorySchema = z.object({
     }),
 });
 
-export type categoryType = z.infer<typeof createCategorySchema>;
+
