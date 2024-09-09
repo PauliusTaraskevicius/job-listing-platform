@@ -1,10 +1,13 @@
 import React from "react";
-import { HireForm } from "./_components/hire-form";
+
+import { getCategories } from "@/actions/category";
+import { CreateJobForm } from "./_components/forms/create-job-form";
 
 const Hiring = () => {
+
   return (
     <div>
-      <HireForm />
+      <CreateJobForm />
     </div>
   );
 };

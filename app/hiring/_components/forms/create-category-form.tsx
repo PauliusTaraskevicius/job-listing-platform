@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -21,9 +23,9 @@ import { createCategorySchema } from "@/actions/category/validation";
 import { useMutation } from "@tanstack/react-query";
 import { createCategory } from "@/actions/category";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
 
-export const HireForm = () => {
+
+export const CreateCategoryForm = () => {
   const { toast } = useToast();
   const route = useRouter();
 

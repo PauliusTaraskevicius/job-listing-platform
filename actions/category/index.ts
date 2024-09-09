@@ -6,8 +6,6 @@ import { db } from "@/db";
 import { NextResponse } from "next/server";
 import { categoryType } from "./type";
 import { Category } from "@prisma/client";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export const createCategory = async (data: categoryType) => {
   const { userId } = auth();
@@ -27,12 +25,34 @@ export const createCategory = async (data: categoryType) => {
     });
 
     return { data: category };
-
   } catch (error) {
     console.log("[CREATE_CATEGORY]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });
   }
-  
+};
+
+export const getCategories = async () => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  try {
+    const categories: Category[] = await db.category.findMany({
+      where: { creatorId: userId },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return { data: categories };
+  } catch (error) {
+    console.log("[GET_CATEGORY]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
 };
