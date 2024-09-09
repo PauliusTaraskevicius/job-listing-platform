@@ -29,6 +29,7 @@ model User {
 
   job      Job[]
   category Category[]
+  city     City[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,11 +50,24 @@ model Category {
   @@index([creatorId])
 }
 
+model City {
+  id    String @id @default(uuid())
+  title String @db.Text
+  job Job[]
+
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [clerkUserId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([creatorId])
+}
+
 model Job {
   id          String   @id @default(uuid())
   title       String   @db.Text
   company     String   @db.Text
-  location    String   @db.Text
   description String   @db.Text
   tags        String[]
   premium     Boolean  @default(false)
@@ -65,9 +79,13 @@ model Job {
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
+  locationId String
+  location   City   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
   @@index([authorId])
+  @@index([locationId])
 }
