@@ -69,7 +69,6 @@ model Job {
   title       String   @db.Text
   company     String   @db.Text
   description String   @db.Text
-  tags        String[]
   premium     Boolean  @default(false)
   remote      Boolean? @default(false)
 

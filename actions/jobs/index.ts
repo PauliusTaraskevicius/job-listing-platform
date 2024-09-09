@@ -4,36 +4,50 @@ import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
 import { NextResponse } from "next/server";
-import { categoryType } from "./type";
-import { Category } from "@prisma/client";
+import { jobType } from "./type";
+import { Job } from "@prisma/client";
 
-export const createCategory = async (data: categoryType) => {
+export const createJob = async (data: jobType) => {
   const { userId } = auth();
 
   if (!userId) {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const { title } = data;
+  const {
+    title,
+    // category,
+    company,
+    description,
+    location,
+    categoryId,
+    locationId,
+    remote
+  } = data;
 
   try {
-    const category: Category = await db.category.create({
+    const job: Job = await db.job.create({
       data: {
         title,
-        creatorId: userId,
+        company,
+        description,
+        locationId,
+        categoryId,
+        remote,
+        authorId: userId,
       },
     });
 
-    return { data: category };
+    return { data: job };
   } catch (error) {
-    console.log("[CREATE_CATEGORY]", error);
+    console.log("[CREATE_JOB]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });
   }
 };
 
-export const getCategories = async () => {
+export const getJobs = async () => {
   const { userId } = auth();
 
   if (!userId) {
@@ -41,16 +55,16 @@ export const getCategories = async () => {
   }
 
   try {
-    const categories: Category[] = await db.category.findMany({
-      where: { creatorId: userId },
+    const jobs: Job[] = await db.job.findMany({
+      where: { authorId: userId },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return { data: categories };
+    return { data: jobs };
   } catch (error) {
-    console.log("[GET_CATEGORIES]", error);
+    console.log("[GET_JOBS]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

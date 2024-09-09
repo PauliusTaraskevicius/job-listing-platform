@@ -4,10 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
 import { NextResponse } from "next/server";
-import { categoryType } from "./type";
-import { Category } from "@prisma/client";
+import { cityType } from "./type";
+import { Category, City } from "@prisma/client";
 
-export const createCategory = async (data: categoryType) => {
+export const createCity = async (data: cityType) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -17,23 +17,23 @@ export const createCategory = async (data: categoryType) => {
   const { title } = data;
 
   try {
-    const category: Category = await db.category.create({
+    const city: City = await db.city.create({
       data: {
         title,
         creatorId: userId,
       },
     });
 
-    return { data: category };
+    return { data: city };
   } catch (error) {
-    console.log("[CREATE_CATEGORY]", error);
+    console.log("[CREATE_CITY]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });
   }
 };
 
-export const getCategories = async () => {
+export const getCities = async () => {
   const { userId } = auth();
 
   if (!userId) {
@@ -41,16 +41,16 @@ export const getCategories = async () => {
   }
 
   try {
-    const categories: Category[] = await db.category.findMany({
+    const cities: City[] = await db.city.findMany({
       where: { creatorId: userId },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return { data: categories };
+    return { data: cities };
   } catch (error) {
-    console.log("[GET_CATEGORIES]", error);
+    console.log("[GET_CITIES]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

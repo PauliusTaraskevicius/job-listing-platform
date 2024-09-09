@@ -1,2 +1,4 @@
-- /hiring => hiring forma
+- /hiring => hiring forma: {
+    -many to many relationships del cities (darbo skelbime pasirinkti ne viena miesta)
+}
 - admin panel
