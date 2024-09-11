@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 export interface Option {
   value: string;
-  label: string;
+  title: string;
   disable?: boolean;
   /** fixed option that can't be removed. */
   fixed?: boolean;
@@ -344,7 +344,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
     const CreatableItem = () => {
       if (!creatable) return undefined;
       if (
-        isOptionsExist(options, [{ value: inputValue, label: inputValue }]) ||
+        isOptionsExist(options, [{ value: inputValue, title: inputValue }]) ||
         selected.find((s) => s.value === inputValue)
       ) {
         return undefined;
@@ -364,7 +364,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
               return;
             }
             setInputValue('');
-            const newOptions = [...selected, { value, label: value }];
+            const newOptions = [...selected, { value, title: value }];
             setSelected(newOptions);
             onChange?.(newOptions);
           }}
@@ -462,7 +462,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                   data-fixed={option.fixed}
                   data-disabled={disabled || undefined}
                 >
-                  {option.label}
+                  {option.title}
                   <button
                     className={cn(
                       'ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2',
@@ -584,7 +584,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                                 option.disable && 'cursor-default text-muted-foreground',
                               )}
                             >
-                              {option.label}
+                              {option.title}
                             </CommandItem>
                           );
                         })}

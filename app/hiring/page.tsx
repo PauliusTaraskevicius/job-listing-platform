@@ -1,9 +1,13 @@
+import { getCategories } from "@/actions/category";
 import { CreateJobForm } from "./_components/forms/create-job-form";
 
 
-const Hiring = () => {
+const Hiring = async () => {
+
+  const categories = await getCategories()
+
   return <div>
-    <CreateJobForm />
+    <CreateJobForm categories={categories} />
   </div>;
 };
 

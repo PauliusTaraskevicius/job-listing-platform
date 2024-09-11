@@ -16,13 +16,13 @@ export const createJob = async (data: jobType) => {
 
   const {
     title,
-    // category,
     company,
     description,
+    applyUrl,
     location,
     categoryId,
-    locationId,
-    remote
+
+    remote,
   } = data;
 
   try {
@@ -31,7 +31,8 @@ export const createJob = async (data: jobType) => {
         title,
         company,
         description,
-        locationId,
+        applyUrl,
+        location,
         categoryId,
         remote,
         authorId: userId,

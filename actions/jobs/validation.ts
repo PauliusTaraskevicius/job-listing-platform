@@ -25,14 +25,17 @@ export const createJobSchema = z.object({
     .min(3, {
       message: "Aprašymas privalo būti bent 20 simbolių",
     }),
+
+  applyUrl: z.string({
+    required_error: "Privaloma aplikacijos nuoroda arba elektroninis paštas",
+    invalid_type_error:
+      "Privaloma aplikacijos nuoroda arba elektroninis paštas",
+  }),
   remote: z.boolean().default(false).optional(),
 
-  location: z.array(z.string()).nonempty(),
-
-  // category: z.string({
-  //   required_error: "Privalomas pasirinkti kategorija",
-  //   invalid_type_error: "Privalomas pasirinkti kategorija",
-  // }),
+  location: z.string({
+    required_error: "Privaloma darbo vietos lokacija",
+    invalid_type_error: "Privaloma darbo vietos lokacija",
+  }),
   categoryId: z.string(),
-  locationId: z.string(),
 });

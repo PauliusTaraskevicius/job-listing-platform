@@ -23,13 +23,23 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import { createJobSchema } from "@/actions/jobs/validation";
 import { createJob } from "@/actions/jobs";
-import MultipleSelector, { Option } from "@/components/multiple-selector";
+import MultipleSelector from "@/components/multiple-selector";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { OPTIONS } from "@/lib/city-options";
+import { Category } from "@prisma/client";
 
+type Props = {
+  categories: {
+    data: Category[];
+  };
+};
 
-export const CreateJobForm = () => {
+export const CreateJobForm = ({ categories }: Props) => {
   const { toast } = useToast();
   const route = useRouter();
+
+  console.log(categories.data)
 
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
@@ -37,6 +47,8 @@ export const CreateJobForm = () => {
       title: "",
       company: "",
       description: "",
+      applyUrl: "",
+      location: "",
       remote: false,
     },
   });
@@ -72,7 +84,7 @@ export const CreateJobForm = () => {
             name="company"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Įmonės pavadinimas</FormLabel>
+                <FormLabel>Įmonės</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Įmonės pavadinimas"
@@ -101,26 +113,50 @@ export const CreateJobForm = () => {
               </FormItem>
             )}
           />
-          {/* <MultipleSelector
-            defaultOptions={OPTIONS}
-            placeholder="Select frameworks you like..."
-            emptyIndicator={
-              <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                no results found.
-              </p>
-            }
-          /> */}
+
           <FormField
             control={form.control}
-            name="locationId"
+            name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Miesto pavadinimas</FormLabel>
+                <FormLabel>Kategorija</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Miesto pavadinimas"
-                    {...field}
+                  <MultipleSelector
+                    defaultOptions={categories.data}
                     disabled={isPending}
+                    onChange={field.onChange}
+                    maxSelected={5}
+                    placeholder="Pasirinkite miestą"
+                    emptyIndicator={
+                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                        Rezultatų nerasta bandykite dar kartą.
+                      </p>
+                    }
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Miestas</FormLabel>
+                <FormControl>
+                  <MultipleSelector
+                    defaultOptions={OPTIONS}
+                    disabled={isPending}
+                    onChange={field.onChange}
+                    maxSelected={5}
+                    placeholder="Pasirinkite miestą"
+                    emptyIndicator={
+                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                        Rezultatų nerasta bandykite dar kartą.
+                      </p>
+                    }
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,6 +184,40 @@ export const CreateJobForm = () => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="remote"
+            render={({ field }) => (
+              <FormItem className="flex flex-col items-center justify-between rounded-lg border p-4">
+                <FormLabel className="text-base">
+                  Darbo vietos aprašas
+                </FormLabel>
+                <FormControl>
+                  <Textarea />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="applyUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Aplikacijos nuoroda</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Aplikacijos nuoroda"
+                    {...field}
+                    disabled={isPending}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button type="submit" disabled={isPending}>
             Sukurti kategoriją
           </Button>
