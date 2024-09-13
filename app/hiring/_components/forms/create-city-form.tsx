@@ -31,7 +31,7 @@ export const CreateCityForm = () => {
   const form = useForm<z.infer<typeof createCitySchema>>({
     resolver: zodResolver(createCitySchema),
     defaultValues: {
-      title: "",
+      cityTitle: "",
     },
   });
 
@@ -61,7 +61,7 @@ export const CreateCityForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="title"
+          name="cityTitle"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Miestas</FormLabel>

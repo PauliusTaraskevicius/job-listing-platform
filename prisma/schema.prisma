@@ -32,13 +32,28 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  City      City[]
 }
 
 model Category {
   id    String @id @default(uuid())
   title String @db.Text
 
-  job Job[]
+  jobs Job[] @relation("CategoryToJob")
+
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [clerkUserId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([creatorId])
+}
+
+model City {
+  id        String @id @default(uuid())
+  cityTitle String @db.Text
+  jobs      Job[]  @relation("CityToJob")
 
   creatorId String
   creator   User   @relation(fields: [creatorId], references: [clerkUserId], onDelete: Cascade)
@@ -55,19 +70,22 @@ model Job {
   company     String   @db.Text
   description String   @db.Text
   applyUrl    String   @db.Text
-  location    String   @db.Text
   premium     Boolean  @default(false)
   remote      Boolean? @default(false)
 
   authorId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author   User   @relation(fields: [authorId], references: [clerkUserId], onDelete: Cascade)
 
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category   Category @relation("CategoryToJob", fields: [categoryId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  cityId    String
+  City      City    @relation("CityToJob",fields: [cityId], references: [id])
+
   @@index([categoryId])
+  @@index([cityId])
   @@index([authorId])
 }

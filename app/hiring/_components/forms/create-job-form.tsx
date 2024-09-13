@@ -16,6 +16,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Checkbox } from "@/components/ui/checkbox";
+
 import { Input } from "@/components/ui/input";
 import { Banner } from "../banner";
 
@@ -26,20 +36,20 @@ import { createJob } from "@/actions/jobs";
 import MultipleSelector from "@/components/multiple-selector";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { OPTIONS } from "@/lib/city-options";
-import { Category } from "@prisma/client";
+import { Category, City } from "@prisma/client";
 
 type Props = {
   categories: {
     data: Category[];
   };
+  cities: {
+    data: City[];
+  };
 };
 
-export const CreateJobForm = ({ categories }: Props) => {
+export const CreateJobForm = ({ categories, cities }: Props) => {
   const { toast } = useToast();
   const route = useRouter();
-
-  console.log(categories.data)
 
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
@@ -48,8 +58,9 @@ export const CreateJobForm = ({ categories }: Props) => {
       company: "",
       description: "",
       applyUrl: "",
-      location: "",
       remote: false,
+      categoryId: "",
+      cityId: "",
     },
   });
 
@@ -84,12 +95,13 @@ export const CreateJobForm = ({ categories }: Props) => {
             name="company"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Įmonės</FormLabel>
+                <FormLabel>Įmonė</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Įmonės pavadinimas"
                     {...field}
                     disabled={isPending}
+                    type="text"
                   />
                 </FormControl>
                 <FormMessage />
@@ -120,20 +132,28 @@ export const CreateJobForm = ({ categories }: Props) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Kategorija</FormLabel>
-                <FormControl>
-                  <MultipleSelector
-                    defaultOptions={categories.data}
-                    disabled={isPending}
-                    onChange={field.onChange}
-                    maxSelected={5}
-                    placeholder="Pasirinkite miestą"
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        Rezultatų nerasta bandykite dar kartą.
-                      </p>
-                    }
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  disabled={isPending}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue
+                        placeholder="Pasirinkite kategoriją"
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories.data.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -141,13 +161,46 @@ export const CreateJobForm = ({ categories }: Props) => {
 
           <FormField
             control={form.control}
+            name="cityId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Miestas</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  disabled={isPending}
+                  value={field.value}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue
+                        placeholder="Pasirinkite miestą"
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {cities.data.map((city) => (
+                      <SelectItem key={city.id} value={city.id}>
+                        {city.cityTitle}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* <FormField
+            control={form.control}
             name="location"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Miestas</FormLabel>
                 <FormControl>
                   <MultipleSelector
-                    defaultOptions={OPTIONS}
+                    defaultOptions={cities.citiesData}
                     disabled={isPending}
                     onChange={field.onChange}
                     maxSelected={5}
@@ -162,9 +215,30 @@ export const CreateJobForm = ({ categories }: Props) => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           <FormField
+            control={form.control}
+            name="remote"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox 
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Darbas nuotoliniu</FormLabel>
+                  <FormDescription>
+                    Produk ini akan muncul di Home Page
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          {/* <FormField
             control={form.control}
             name="remote"
             render={({ field }) => (
@@ -181,21 +255,23 @@ export const CreateJobForm = ({ categories }: Props) => {
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           <FormField
             control={form.control}
-            name="remote"
+            name="description"
             render={({ field }) => (
               <FormItem className="flex flex-col items-center justify-between rounded-lg border p-4">
                 <FormLabel className="text-base">
                   Darbo vietos aprašas
                 </FormLabel>
                 <FormControl>
-                  <Textarea />
+                  <Textarea placeholder="Darbo vietos aprašymas" onChange={field.onChange}/>
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -217,9 +293,8 @@ export const CreateJobForm = ({ categories }: Props) => {
               </FormItem>
             )}
           />
-
-          <Button type="submit" disabled={isPending}>
-            Sukurti kategoriją
+          <Button disabled={isPending} type="submit">
+            Submit
           </Button>
         </form>
       </Form>

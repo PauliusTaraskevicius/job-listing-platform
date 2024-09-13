@@ -14,16 +14,8 @@ export const createJob = async (data: jobType) => {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const {
-    title,
-    company,
-    description,
-    applyUrl,
-    location,
-    categoryId,
-
-    remote,
-  } = data;
+  const { title, company, description, applyUrl, remote, cityId, categoryId } =
+    data;
 
   try {
     const job: Job = await db.job.create({
@@ -32,10 +24,10 @@ export const createJob = async (data: jobType) => {
         company,
         description,
         applyUrl,
-        location,
-        categoryId,
         remote,
-        authorId: userId,
+        cityId,
+        categoryId,
+        authorId: userId
       },
     });
 

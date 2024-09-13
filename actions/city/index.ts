@@ -14,12 +14,12 @@ export const createCity = async (data: cityType) => {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const { title } = data;
+  const { cityTitle } = data;
 
   try {
     const city: City = await db.city.create({
       data: {
-        title,
+        cityTitle,
         creatorId: userId,
       },
     });
