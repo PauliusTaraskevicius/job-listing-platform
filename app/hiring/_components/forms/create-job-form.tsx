@@ -33,10 +33,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import { createJobSchema } from "@/actions/jobs/validation";
 import { createJob } from "@/actions/jobs";
-import MultipleSelector from "@/components/multiple-selector";
+
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Category, City } from "@prisma/client";
+import MultipleSelector from "@/components/multiple-selector";
 
 type Props = {
   categories: {
@@ -191,31 +192,6 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
               </FormItem>
             )}
           />
-
-          {/* <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Miestas</FormLabel>
-                <FormControl>
-                  <MultipleSelector
-                    defaultOptions={cities.citiesData}
-                    disabled={isPending}
-                    onChange={field.onChange}
-                    maxSelected={5}
-                    placeholder="Pasirinkite miestą"
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        Rezultatų nerasta bandykite dar kartą.
-                      </p>
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
 
           <FormField
             control={form.control}
