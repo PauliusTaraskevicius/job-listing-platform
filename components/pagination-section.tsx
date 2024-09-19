@@ -13,11 +13,11 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { Job } from "@/lib/types";
+
 import { Jobs } from "./jobs/jobs";
 import { notFound } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
-import { Card, CardHeader } from "./ui/card";
+import { Job } from "@prisma/client";
 
 type Props = {
   jobsData: Job[];

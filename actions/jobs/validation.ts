@@ -34,6 +34,7 @@ export const createJobSchema = z.object({
     })
     .url({ message: "Neteisingai įvesta nuoroda" }),
 
+  premium: z.boolean().default(false).optional(),
   remote: z.boolean().default(false).optional(),
 
   categoryId: z.string().min(1),

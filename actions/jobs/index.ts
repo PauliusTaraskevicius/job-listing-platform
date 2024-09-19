@@ -14,7 +14,7 @@ export const createJob = async (data: jobType) => {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const { title, company, description, applyUrl, remote, cityId, categoryId } =
+  const { title, company, description, applyUrl, remote, cityId, categoryId, premium } =
     data;
 
   try {
@@ -25,6 +25,7 @@ export const createJob = async (data: jobType) => {
         description,
         applyUrl,
         remote,
+        premium,
         cityId,
         categoryId,
         authorId: userId
@@ -53,6 +54,10 @@ export const getJobs = async () => {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        category: true,
+        city: true
+      }
     });
 
     return { data: jobs };
@@ -63,3 +68,5 @@ export const getJobs = async () => {
     });
   }
 };
+
+

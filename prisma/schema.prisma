@@ -82,8 +82,8 @@ model Job {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  cityId    String
-  City      City    @relation("CityToJob",fields: [cityId], references: [id])
+  cityId String
+  city   City   @relation("CityToJob", fields: [cityId], references: [id])
 
   @@index([categoryId])
   @@index([cityId])

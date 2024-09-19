@@ -33,11 +33,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import { createJobSchema } from "@/actions/jobs/validation";
 import { createJob } from "@/actions/jobs";
-
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Category, City } from "@prisma/client";
-import MultipleSelector from "@/components/multiple-selector";
 
 type Props = {
   categories: {
@@ -199,7 +197,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
-                  <Checkbox 
+                  <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
@@ -245,7 +243,10 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                   Darbo vietos aprašas
                 </FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Darbo vietos aprašymas" onChange={field.onChange}/>
+                  <Textarea
+                    placeholder="Darbo vietos aprašymas"
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

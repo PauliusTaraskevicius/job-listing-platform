@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-import { Job } from "@/lib/types";
-
 import {
   Card,
   CardDescription,
@@ -12,13 +10,17 @@ import {
 } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
+import { Category, City, Job } from "@prisma/client";
 
 type Props = {
-  job: Job;
+  job: Job & {
+    category: Category;
+    city: City;
+  };
 };
 
 export const Jobs = ({ job }: Props) => {
-  const { company, location, tags, title } = job;
+  const { company, title, category, city, premium, remote } = job;
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -43,16 +45,28 @@ export const Jobs = ({ job }: Props) => {
                 {title}
               </h1>
             </div>
-            <div className="flex space-x-1">
+            {/* <div className="flex space-x-1">
               {tags.map((tag) => (
                 <div key={tag} className="">
                   <Badge className="cursor-pointer">{tag}</Badge>
                 </div>
               ))}
+            </div> */}
+            <div className="flex space-x-1">
+              <div className="">
+                {remote === false ? (
+                  <Badge className="cursor-pointer">No remote</Badge>
+                ) : (
+                  <Badge className="cursor-pointer">Darbas iš namų</Badge>
+                )}
+              </div>
             </div>
           </div>
           <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
-            {location}
+            {category.title}
+          </span>
+          <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
+            {city.cityTitle}
           </span>
         </CardDescription>
       </CardHeader>
