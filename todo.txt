@@ -1,3 +1,6 @@
 
 - admin panel
 - multiple selections miestam (darbo vieta gali buti keliuose miestuose)
+- tag modelis
+- pabandyti vietoj atskiru City, Category modeliu hard codinti ir Job modeli parasyti cities String[], categories[]
+

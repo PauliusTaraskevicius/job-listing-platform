@@ -19,6 +19,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -57,7 +58,10 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
       company: "",
       description: "",
       applyUrl: "",
+      paymentMethod: "BRUTO",
+      salary: "",
       remote: false,
+      premium: false,
       categoryId: "",
       cityId: "",
     },
@@ -107,6 +111,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="title"
@@ -252,6 +257,60 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
               </FormItem>
             )}
           />
+          <div className="flex w-full space-x-2">
+            <FormField
+              control={form.control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Darbo užmokestis</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="1200 - 1500 &euro;/mėn"
+                      {...field}
+                      disabled={isPending}
+                      type="tel"
+                      pattern="^[0-9-]*$"
+                      maxLength={12}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="paymentMethod"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Darbo užmokesčio tipas</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    disabled={isPending}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue
+                          placeholder="Pasirinkite  mokėjimo tipą"
+                          defaultValue={field.value}
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="BRUTO">Bruto</SelectItem>
+                        <SelectItem value="NETO">Neto</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}

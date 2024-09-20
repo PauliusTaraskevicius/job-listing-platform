@@ -33,7 +33,11 @@ export const createJobSchema = z.object({
         "Privaloma aplikacijos nuoroda arba elektroninis paštas",
     })
     .url({ message: "Neteisingai įvesta nuoroda" }),
-
+  salary: z.string({
+    required_error: "Privalomas įrašyti atlyginimą.",
+    invalid_type_error: "Neteisingai įvestas atlyginimas.",
+  }).min(1).max(12),
+  paymentMethod: z.enum(["BRUTO", "NETO"]).default("BRUTO"),
   premium: z.boolean().default(false).optional(),
   remote: z.boolean().default(false).optional(),
 

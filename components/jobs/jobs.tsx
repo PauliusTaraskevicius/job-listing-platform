@@ -11,6 +11,8 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Category, City, Job } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import { Star } from "lucide-react";
 
 type Props = {
   job: Job & {
@@ -20,7 +22,16 @@ type Props = {
 };
 
 export const Jobs = ({ job }: Props) => {
-  const { company, title, category, city, premium, remote } = job;
+  const {
+    company,
+    title,
+    category,
+    city,
+    premium,
+    remote,
+    salary,
+    paymentMethod,
+  } = job;
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -33,41 +44,53 @@ export const Jobs = ({ job }: Props) => {
   }
 
   return (
-    <Card className="w-full">
+    <Card className="shadow-md">
       <CardHeader>
         <CardTitle className="font-normal text-base leading-none tracking-wide">
           {company}
         </CardTitle>
         <CardDescription className="flex flex-col space-y-1">
           <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-xl text-black dark:text-white font-semibold leading-none tracking-tight">
-                {title}
-              </h1>
-            </div>
-            {/* <div className="flex space-x-1">
-              {tags.map((tag) => (
-                <div key={tag} className="">
-                  <Badge className="cursor-pointer">{tag}</Badge>
+            <div className="">
+              {" "}
+              <div>
+                <h1 className="text-xl text-black dark:text-white font-semibold leading-none tracking-tight py-1">
+                  {title}
+                </h1>
+                <div className="flex space-x-2">
+                  <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
+                    {category.title},
+                  </span>
+                  <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
+                    {city.cityTitle}
+                  </span>
                 </div>
-              ))}
-            </div> */}
-            <div className="flex space-x-1">
-              <div className="">
-                {remote === false ? (
-                  <Badge className="cursor-pointer">No remote</Badge>
-                ) : (
-                  <Badge className="cursor-pointer">Darbas iš namų</Badge>
-                )}
               </div>
             </div>
+
+            <div className="flex space-x-3">
+              <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start lg:space-y-0 space-y-2">
+                <div className="">
+                  {remote && (
+                    <Badge className="cursor-pointer">Darbas iš namų</Badge>
+                  )}
+                </div>
+
+                <div className="flex flex-col justify-center items-center space-y-1">
+                  <Badge className="cursor-pointer">{salary} &euro;/mėn </Badge>
+                  <div>
+                    <span>
+                      {" "}
+                      {paymentMethod === "BRUTO"
+                        ? "Neatskaičius mokesčių"
+                        : "Į rankas"}{" "}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <Star className="" />
+            </div>
           </div>
-          <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
-            {category.title}
-          </span>
-          <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
-            {city.cityTitle}
-          </span>
         </CardDescription>
       </CardHeader>
     </Card>

@@ -18,6 +18,13 @@ enum Role {
   ADMIN
 }
 
+enum PaymentMethod {
+  // Bruto (prieš mokesčius)
+  BRUTO
+  // Neto (į rankas) 
+  NETO
+}
+
 model User {
   id          String  @id @default(uuid())
   clerkUserId String  @unique
@@ -33,6 +40,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   City      City[]
+  // Tag       Tag[]
 }
 
 model Category {
@@ -64,14 +72,28 @@ model City {
   @@index([creatorId])
 }
 
+// model Tag {
+//   id    String @id @default(uuid())
+//   title String @unique @db.Text
+//   jobs  Job[]  @relation("TagToJob")
+
+//   creatorId String
+//   creator   User   @relation(fields: [creatorId], references: [clerkUserId], onDelete: Cascade)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
 model Job {
-  id          String   @id @default(uuid())
-  title       String   @db.Text
-  company     String   @db.Text
-  description String   @db.Text
-  applyUrl    String   @db.Text
-  premium     Boolean  @default(false)
-  remote      Boolean? @default(false)
+  id            String        @id @default(uuid())
+  title         String        @db.Text
+  company       String        @db.Text
+  description   String        @db.Text
+  applyUrl      String        @db.Text
+  paymentMethod PaymentMethod @default(BRUTO)
+  salary        String
+  premium       Boolean       @default(false)
+  remote        Boolean?      @default(false)
 
   authorId String
   author   User   @relation(fields: [authorId], references: [clerkUserId], onDelete: Cascade)
@@ -79,11 +101,15 @@ model Job {
   categoryId String
   category   Category @relation("CategoryToJob", fields: [categoryId], references: [id], onDelete: Cascade)
 
+  cityId String
+  city   City   @relation("CityToJob", fields: [cityId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  cityId String
-  city   City   @relation("CityToJob", fields: [cityId], references: [id])
+  // tag    Tag?    @relation("TagToJob", fields: [tagId], references: [id], onDelete: Cascade)
+  // tagId  String?
+  // @@index([tagId])
 
   @@index([categoryId])
   @@index([cityId])

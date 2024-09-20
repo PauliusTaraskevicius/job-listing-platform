@@ -14,8 +14,18 @@ export const createJob = async (data: jobType) => {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const { title, company, description, applyUrl, remote, cityId, categoryId, premium } =
-    data;
+  const {
+    title,
+    company,
+    description,
+    applyUrl,
+    remote,
+    cityId,
+    categoryId,
+    premium,
+    paymentMethod,
+    salary,
+  } = data;
 
   try {
     const job: Job = await db.job.create({
@@ -26,9 +36,11 @@ export const createJob = async (data: jobType) => {
         applyUrl,
         remote,
         premium,
+        paymentMethod,
+        salary,
         cityId,
         categoryId,
-        authorId: userId
+        authorId: userId,
       },
     });
 
@@ -56,8 +68,8 @@ export const getJobs = async () => {
       },
       include: {
         category: true,
-        city: true
-      }
+        city: true,
+      },
     });
 
     return { data: jobs };
@@ -68,5 +80,3 @@ export const getJobs = async () => {
     });
   }
 };
-
-
