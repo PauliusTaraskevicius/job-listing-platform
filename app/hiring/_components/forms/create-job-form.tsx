@@ -35,8 +35,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { createJobSchema } from "@/actions/jobs/validation";
 import { createJob } from "@/actions/jobs";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
+
 import { Category, City } from "@prisma/client";
+import RichTextField from "@/components/rich-text-field/rich-text-field";
 
 type Props = {
   categories: {
@@ -89,7 +90,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col space-y-20 p-4">
       <Banner />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -210,7 +211,8 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <div className="space-y-1 leading-none">
                   <FormLabel>Darbas nuotoliniu</FormLabel>
                   <FormDescription>
-                    Produk ini akan muncul di Home Page
+                    Darbo funkcijų ar jų dalių su darbdaviu suderinta tvarka
+                    reguliariai atliekama nuotoliniu būdu.
                   </FormDescription>
                 </div>
               </FormItem>
@@ -243,13 +245,11 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="flex flex-col items-center justify-between rounded-lg border p-4">
-                <FormLabel className="text-base">
-                  Darbo vietos aprašas
-                </FormLabel>
+              <FormItem>
+                <FormLabel>Darbo vietos aprašymas</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Darbo vietos aprašymas"
+                  <RichTextField
+                    description={field.name}
                     onChange={field.onChange}
                   />
                 </FormControl>
@@ -257,6 +257,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
               </FormItem>
             )}
           />
+
           <div className="flex w-full space-x-2">
             <FormField
               control={form.control}

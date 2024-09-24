@@ -6,7 +6,7 @@ import { Minus } from "lucide-react";
 
 export const Banner = () => {
   return (
-    <div className="flex flex-col space-y-5 px-4 xl:px-0">
+    <div className="flex flex-col space-y-5 px-4 xl:px-0 pt-4">
     <h1 className="text-2xl md:text-4xl font-bold">
       Atraskite naujus talentus jūsų darbo vietai
     </h1>

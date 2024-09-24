@@ -4,10 +4,9 @@ import { PaginationSection } from "@/components/pagination-section";
 
 import { DUMMY_DATA } from "@/DUMMY_DATA";
 
+
 export default async function Home() {
-
-
-  const jobs = await getJobs()
+  const jobs = await getJobs();
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
