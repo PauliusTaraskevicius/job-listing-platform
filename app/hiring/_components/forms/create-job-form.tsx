@@ -197,7 +197,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             )}
           />
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="remote"
             render={({ field }) => (
@@ -217,9 +217,9 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 </div>
               </FormItem>
             )}
-          />
+          /> */}
 
-          {/* <FormField
+          <FormField
             control={form.control}
             name="remote"
             render={({ field }) => (
@@ -239,7 +239,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
 
           <FormField
             control={form.control}

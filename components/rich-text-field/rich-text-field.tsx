@@ -7,8 +7,9 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import Heading from "@tiptap/extension-heading";
-import Underline from '@tiptap/extension-underline'
-import Link from '@tiptap/extension-link'
+import Underline from "@tiptap/extension-underline";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 import ToolBar from "./toolbar";
 import { cn } from "@/lib/utils";
 
@@ -31,15 +32,18 @@ const RichTextField = ({ description, onChange, className }: Props) => {
       Link.configure({
         openOnClick: false,
         autolink: true,
-        defaultProtocol: 'https',
+        defaultProtocol: "https",
       }),
       Document,
       Paragraph,
       Text,
       Blockquote,
       Underline,
+      Placeholder.configure({
+        placeholder: "Darbo vietos aprašymas",
+      }),
     ],
-    content: "Darbo vietos aprašymas",
+    // content: "Darbo vietos aprašymas",
     immediatelyRender: false,
     editorProps: {
       attributes: {
