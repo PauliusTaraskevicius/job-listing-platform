@@ -2,8 +2,13 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
+import Blockquote from "@tiptap/extension-blockquote";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 import Heading from "@tiptap/extension-heading";
+import Underline from '@tiptap/extension-underline'
+import Link from '@tiptap/extension-link'
 import ToolBar from "./toolbar";
 import { cn } from "@/lib/utils";
 
@@ -20,11 +25,22 @@ const RichTextField = ({ description, onChange, className }: Props) => {
       Heading.configure({
         HTMLAttributes: {
           class: "text-xl font-bold",
-          levels: [2],
+          levels: [1, 2, 3],
         },
       }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+      }),
+      Document,
+      Paragraph,
+      Text,
+      Blockquote,
+      Underline,
     ],
     content: "Darbo vietos aprašymas",
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         class: cn(
