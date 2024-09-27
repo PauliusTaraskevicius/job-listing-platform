@@ -30,7 +30,7 @@ const RichTextField = ({ description, onChange, className }: Props) => {
         },
       }),
       Link.configure({
-        openOnClick: false,
+        openOnClick: true,
         autolink: true,
         defaultProtocol: "https",
       }),

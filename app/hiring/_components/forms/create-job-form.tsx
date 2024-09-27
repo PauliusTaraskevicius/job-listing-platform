@@ -197,28 +197,6 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             )}
           />
 
-          {/* <FormField
-            control={form.control}
-            name="remote"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Darbas nuotoliniu</FormLabel>
-                  <FormDescription>
-                    Darbo funkcijų ar jų dalių su darbdaviu suderinta tvarka
-                    reguliariai atliekama nuotoliniu būdu.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          /> */}
-
           <FormField
             control={form.control}
             name="remote"
@@ -227,7 +205,8 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <div className="space-y-0.5">
                   <FormLabel className="text-base">Darbas nuotoliniu</FormLabel>
                   <FormDescription>
-                    Receive emails about new products, features, and more.
+                    Darbo funkcijų ar jų dalių su darbdaviu suderinta tvarka
+                    reguliariai atliekama nuotoliniu būdu.
                   </FormDescription>
                 </div>
                 <FormControl>

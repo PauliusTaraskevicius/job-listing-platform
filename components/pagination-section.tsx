@@ -63,7 +63,10 @@ export const PaginationSection = ({ jobsData }: Props) => {
   return (
     <>
       {currentItems.map((job) => (
-        <div key={job.title} className="w-full py-1.5 cursor-pointer lg:px-0 px-1">
+        <div
+          key={job.title}
+          className="w-full py-1.5 cursor-pointer lg:px-0 px-1"
+        >
           <Link href={`/job/${job.id}`}>
             <Jobs job={job} />
           </Link>
@@ -85,7 +88,7 @@ export const PaginationSection = ({ jobsData }: Props) => {
               }
             >
               <PaginationLink
-                className="cursor-pointer"
+                className="cursor-pointer dark:text-black"
                 onClick={() => setCurrentPage(page)}
               >
                 {page}

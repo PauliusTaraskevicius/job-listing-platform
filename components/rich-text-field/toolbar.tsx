@@ -1,6 +1,6 @@
 "use client";
 
-import { isActive, type Editor } from "@tiptap/react";
+import { type Editor } from "@tiptap/react";
 import { Toggle } from "../ui/toggle";
 import {
   Bold,

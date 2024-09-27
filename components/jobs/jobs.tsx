@@ -9,9 +9,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { Badge } from "@/components/ui/badge";
 import { Category, City, Job } from "@prisma/client";
-import { cn } from "@/lib/utils";
+
 import { Star } from "lucide-react";
 
 type Props = {
@@ -69,8 +76,8 @@ export const Jobs = ({ job }: Props) => {
             </div>
 
             <div className="flex space-x-3">
-              <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start lg:space-y-0 space-y-2">
-                <div className="">
+              <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start lg:space-y-0 space-y-2 space-x-2">
+                <div>
                   {remote && (
                     <Badge className="cursor-pointer">Darbas iš namų</Badge>
                   )}
@@ -81,9 +88,20 @@ export const Jobs = ({ job }: Props) => {
                   <div>
                     <span>
                       {" "}
-                      {paymentMethod === "BRUTO"
-                        ? "Neatskaičius mokesčių"
-                        : "Į rankas"}{" "}
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            {paymentMethod === "BRUTO" ? "Bruto" : "Neto"}
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              {paymentMethod === "BRUTO"
+                                ? "Neatskaičius mokesčių"
+                                : "Į rankas"}{" "}
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </span>
                   </div>
                 </div>
