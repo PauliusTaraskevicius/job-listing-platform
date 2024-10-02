@@ -2,4 +2,5 @@
 - admin panel
 - tag modelis
 - filter by Miestas, Kategorija(darbo sritis) ir raktinis zodis? Select shadcn komponentas
+- istrinti city, category modelius is db.Pabandyti priskirti job modeliui category ir city kaip string, o kategorijas, miestus atskirai surasyti ir eksportuoti.
 

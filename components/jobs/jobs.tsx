@@ -106,7 +106,7 @@ export const Jobs = ({ job }: Props) => {
                   </div>
                 </div>
               </div>
-              <Star className="" />
+              <Star className="size-5 hover:fill-yellow-300 hover:text-yellow-300 transition" />
             </div>
           </div>
         </CardDescription>
