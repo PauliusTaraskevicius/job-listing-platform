@@ -56,3 +56,32 @@ export const getCategories = async () => {
     });
   }
 };
+
+export const getCategoriesWithJobs = async (category: string) => {
+  try {
+    const categories = await db.category.findMany({
+      where: {
+        title: {
+          contains: category.charAt(0).toUpperCase()
+        }
+      },
+      select: {
+        jobs: {
+          include: {
+            category: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return { data: categories };
+  } catch (error) {
+    console.log("[GET_CATEGORIES_WITH_JOBS]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};

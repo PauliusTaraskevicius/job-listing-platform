@@ -45,7 +45,7 @@ model User {
 
 model Category {
   id    String @id @default(uuid())
-  title String @db.Text
+  title String @unique @db.Text
 
   jobs Job[] @relation("CategoryToJob")
 
@@ -60,7 +60,7 @@ model Category {
 
 model City {
   id        String @id @default(uuid())
-  cityTitle String @db.Text
+  cityTitle String @unique @db.Text
   jobs      Job[]  @relation("CityToJob")
 
   creatorId String
@@ -86,7 +86,7 @@ model City {
 
 model Job {
   id            String        @id @default(uuid())
-  title         String        @db.Text
+  title         String        @unique @db.Text
   company       String        @db.Text
   description   String        @db.Text
   applyUrl      String        @db.Text
