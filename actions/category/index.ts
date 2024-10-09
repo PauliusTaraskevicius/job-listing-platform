@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { NextResponse } from "next/server";
 import { categoryType } from "./type";
 import { Category } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const createCategory = async (data: categoryType) => {
   const { userId } = auth();
@@ -34,15 +35,9 @@ export const createCategory = async (data: categoryType) => {
 };
 
 export const getCategories = async () => {
-  const { userId } = auth();
-
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
 
   try {
     const categories: Category[] = await db.category.findMany({
-      where: { creatorId: userId },
       orderBy: {
         createdAt: "desc",
       },
@@ -57,13 +52,31 @@ export const getCategories = async () => {
   }
 };
 
-export const getCategoriesWithJobs = async (category: string) => {
+export const getCategoriesWithJobs = async (category?: string) => {
   try {
+    if (!category) {
+      const categories = await db.category.findMany({
+        select: {
+          jobs: {
+            include: {
+              category: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+
+
+      return { data: categories };
+    }
+
     const categories = await db.category.findMany({
       where: {
         title: {
-          contains: category.charAt(0).toUpperCase()
-        }
+          contains: category.charAt(0).toUpperCase(),
+        },
       },
       select: {
         jobs: {
@@ -76,7 +89,7 @@ export const getCategoriesWithJobs = async (category: string) => {
         createdAt: "desc",
       },
     });
-
+    
     return { data: categories };
   } catch (error) {
     console.log("[GET_CATEGORIES_WITH_JOBS]", error);

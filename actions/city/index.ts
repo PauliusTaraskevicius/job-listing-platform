@@ -34,15 +34,15 @@ export const createCity = async (data: cityType) => {
 };
 
 export const getCities = async () => {
-  const { userId } = auth();
+  // const { userId } = auth();
 
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
+  // if (!userId) {
+  //   throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  // }
 
   try {
     const cities: City[] = await db.city.findMany({
-      where: { creatorId: userId },
+      // where: { creatorId: userId },
       orderBy: {
         createdAt: "desc",
       },
