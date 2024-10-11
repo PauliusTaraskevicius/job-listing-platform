@@ -54,15 +54,8 @@ export const createJob = async (data: jobType) => {
 };
 
 export const getJobs = async () => {
-  // const { userId } = auth();
-
-  // if (!userId) {
-  //   throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  // }
-
   try {
-    const jobs: Job[] = await db.job.findMany({
-      // where: { authorId: userId },
+    const jobs = await db.job.findMany({
       orderBy: {
         createdAt: "desc",
       },
@@ -80,3 +73,5 @@ export const getJobs = async () => {
     });
   }
 };
+
+

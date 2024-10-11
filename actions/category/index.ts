@@ -6,7 +6,6 @@ import { db } from "@/db";
 import { NextResponse } from "next/server";
 import { categoryType } from "./type";
 import { Category } from "@prisma/client";
-import { revalidatePath } from "next/cache";
 
 export const createCategory = async (data: categoryType) => {
   const { userId } = auth();
@@ -35,7 +34,6 @@ export const createCategory = async (data: categoryType) => {
 };
 
 export const getCategories = async () => {
-
   try {
     const categories: Category[] = await db.category.findMany({
       orderBy: {
@@ -46,53 +44,6 @@ export const getCategories = async () => {
     return { data: categories };
   } catch (error) {
     console.log("[GET_CATEGORIES]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
-  }
-};
-
-export const getCategoriesWithJobs = async (category?: string) => {
-  try {
-    if (!category) {
-      const categories = await db.category.findMany({
-        select: {
-          jobs: {
-            include: {
-              category: true,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
-
-
-      return { data: categories };
-    }
-
-    const categories = await db.category.findMany({
-      where: {
-        title: {
-          contains: category.charAt(0).toUpperCase(),
-        },
-      },
-      select: {
-        jobs: {
-          include: {
-            category: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    
-    return { data: categories };
-  } catch (error) {
-    console.log("[GET_CATEGORIES_WITH_JOBS]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

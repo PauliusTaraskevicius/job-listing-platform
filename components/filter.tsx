@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { getCategoriesWithJobs } from "@/actions/category";
-import { Category, Job } from "@prisma/client";
+import { Category, City, Job } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -13,69 +12,89 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getJobs } from "@/actions/jobs";
 
 type Props = {
   categoriesData: Category[];
+  citiesData: City[];
 };
 
-const Filter = ({ categoriesData }: Props) => {
+const Filter = ({ categoriesData, citiesData }: Props) => {
   const [categoryInput, setCategoryInput] = useState<string>("");
+  const [cityInput, setCityInput] = useState<string>("");
 
-  const { data: jobs } = useQuery({
-    queryKey: ["categories"],
+  const { data: jobsData } = useQuery({
+    queryKey: ["jobs"],
     queryFn: async () => {
-      const categories = await getCategoriesWithJobs(categoryInput);
+      const jobs = await getJobs();
 
-      return categories;
+      return jobs;
     },
   });
 
+  const jobFilter = jobsData?.data.filter(
+    (item) =>
+      item.category.title === categoryInput || item.city.cityTitle === cityInput
+  );
+
+  
+
   return (
     <div>
-      <Select
-        value={categoryInput}
-        onValueChange={(value) => {
-          setCategoryInput(value);
-        }}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Kategorija" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            {categoriesData.map((category) => (
-              <SelectItem key={category.id} value={category.title}>
-                {category.title}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="flex space-x-4">
+        <Select
+          value={categoryInput}
+          onValueChange={(value) => {
+            setCategoryInput(value);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Kategorija" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {categoriesData.map((category) => (
+                <SelectItem key={category.id} value={category.title}>
+                  {category.title}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select
+          value={cityInput}
+          onValueChange={(value) => {
+            setCityInput(value);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Miestas" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {citiesData.map((city) => (
+                <SelectItem key={city.id} value={city.cityTitle}>
+                  {city.cityTitle}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
       {!categoryInput &&
-        jobs?.data.map((job) => (
-          <>
-            {job.jobs.map((item, i) => (
-              <div key={i}>
-                {item.category.title} {item.title}
-              </div>
-            ))}
-          </>
+        !cityInput &&
+        jobsData?.data.map((job) => (
+          <div key={job.id}>
+            {job.category.title} {job.city.cityTitle} {job.title}
+          </div>
         ))}
 
-      {jobs?.data.map((job) => (
-        <>
-          {job.jobs
-            .filter((item) => {
-              return item.category.title === categoryInput;
-            })
-            .map((job) => (
-              <div key={job.categoryId}>
-                {job.category.title} {job.title}
-              </div>
-            ))}
-        </>
+      {jobFilter?.map((job) => (
+        <div key={job.id}>
+          {job.category.title} {job.city.cityTitle} {job.title}
+        </div>
       ))}
-      <p className="font-extrabold">{categoryInput}</p>
     </div>
   );
 };
