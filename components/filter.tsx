@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { Category, City, Job } from "@prisma/client";
+import { Category, City } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -9,10 +9,12 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { getJobs } from "@/actions/jobs";
+import { ListChecks } from "lucide-react";
 
 type Props = {
   categoriesData: Category[];
@@ -23,7 +25,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
   const [categoryInput, setCategoryInput] = useState<string>("");
   const [cityInput, setCityInput] = useState<string>("");
 
-  const { data: jobsData } = useQuery({
+  const { data: jobsData, isLoading: loadingJobs } = useQuery({
     queryKey: ["jobs"],
     queryFn: async () => {
       const jobs = await getJobs();
@@ -37,11 +39,44 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
       item.category.title === categoryInput || item.city.cityTitle === cityInput
   );
 
-  
+  const isLoading = loadingJobs;
+
+  const jobOptions = jobsData?.data.map((job) => ({
+    value: job.id,
+    label: job.title,
+    category: job.category.title,
+    city: job.city.cityTitle,
+  }));
 
   return (
     <div>
-      <div className="flex space-x-4">
+      <div className="flex flex-col lg:flex-row gap-2">
+        <Select
+          value={categoryInput}
+          onValueChange={(value) => {
+            setCategoryInput(value);
+          }}
+        >
+          <SelectTrigger className="w-full lg:w-auto h-8">
+            <div className="flex items-center pr-2">
+              <ListChecks className="size-4 mr-2" />
+              <SelectValue placeholder="Kategorijos" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Kategorijos</SelectItem>
+            <SelectSeparator />
+            {categoriesData.map((category) => (
+              <SelectItem key={category.id} value={category.title}>
+                {category.title}
+              </SelectItem>
+            ))}
+
+
+          </SelectContent>
+        </Select>
+      </div>
+      {/* <div className="flex space-x-4">
         <Select
           value={categoryInput}
           onValueChange={(value) => {
@@ -68,7 +103,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
           }}
         >
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Miestas" />
+            <SelectValue placeholder='Miestas' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -94,7 +129,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
         <div key={job.id}>
           {job.category.title} {job.city.cityTitle} {job.title}
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

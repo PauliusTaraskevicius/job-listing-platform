@@ -39,6 +39,9 @@ export const getCities = async () => {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        jobs: true,
+      }
     });
 
     return { data: cities };

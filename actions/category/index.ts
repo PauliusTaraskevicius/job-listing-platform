@@ -39,6 +39,9 @@ export const getCategories = async () => {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        jobs: true,
+      },
     });
 
     return { data: categories };
