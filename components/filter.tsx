@@ -1,22 +1,11 @@
 "use client";
 import { useState } from "react";
 
-import { Category, City } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { getJobs } from "@/actions/jobs";
-import { ListChecks } from "lucide-react";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,12 +16,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+
 import { cn } from "@/lib/utils";
+import { Category, City } from "@prisma/client";
 
 type Props = {
   categoriesData: Category[];
@@ -40,11 +32,11 @@ type Props = {
 };
 
 const Filter = ({ categoriesData, citiesData }: Props) => {
-  const [categoryInput, setCategoryInput] = useState<string>("");
-  const [cityInput, setCityInput] = useState<string>("");
+  const [openCategory, setOpenCategory] = useState<boolean>(false);
+  const [openCity, setOpenCity] = useState<boolean>(false);
 
-  const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
+  const [valueCategory, setValueCategory] = useState<string>("");
+  const [valueCity, setValueCity] = useState<string>("");
 
   const { data: jobsData, isLoading: loadingJobs } = useQuery({
     queryKey: ["jobs"],
@@ -56,31 +48,32 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
   });
 
   const jobFilter = jobsData?.data.filter(
-    (item) => item.category.title === value || item.city.cityTitle === value
+    (item) =>
+      !!valueCategory && !!valueCity ? item.category.title === valueCategory && item.city.cityTitle === valueCity : 
+      valueCategory ? item.category.title === valueCategory : valueCity ? item.city.cityTitle === valueCity : null
   );
+
 
   const isLoading = loadingJobs;
 
-  const jobOptions = jobsData?.data.map((job) => ({
-    value: job.category.title,
-    label: job.title,
-    category: job.category.title,
-    city: job.city.cityTitle,
-  }));
+  if (isLoading) {
+    return <Loader2 className="size-6 animate-spin" />;
+  }
 
   return (
     <div>
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={openCategory} onOpenChange={setOpenCategory}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
-            aria-expanded={open}
+            aria-expanded={openCategory}
             className="w-[500px] justify-between"
           >
-            {value
-              ? jobOptions?.find((framework) => framework.value === value)
-                  ?.category
+            {valueCategory
+              ? categoriesData?.find(
+                  (framework) => framework.title === valueCategory
+                )?.title
               : "Kategorija"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -91,22 +84,26 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
             <CommandEmpty>Kategorija nerasta.</CommandEmpty>
             <CommandGroup>
               <CommandList>
-                {jobOptions?.map((framework) => (
+                {categoriesData?.map((framework) => (
                   <CommandItem
-                    key={framework.value}
-                    value={framework.value}
+                    key={framework.title}
+                    value={framework.title}
                     onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue);
-                      setOpen(false);
+                      setValueCategory(
+                        currentValue === valueCategory ? "" : currentValue
+                      );
+                      setOpenCategory(false);
                     }}
                   >
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        value === framework.value ? "opacity-100" : "opacity-0"
+                        valueCategory === framework.title
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
-                    {framework.category}
+                    {framework.title}
                   </CommandItem>
                 ))}
               </CommandList>
@@ -115,11 +112,66 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
         </PopoverContent>
       </Popover>
 
-      {jobFilter?.map((job) => (
+      <Popover open={openCity} onOpenChange={setOpenCity}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={openCity}
+            className="w-[500px] justify-between"
+          >
+            {valueCity
+              ? citiesData?.find(
+                  (framework) => framework.cityTitle === valueCity
+                )?.cityTitle
+              : "Miestas"}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[500px] p-0">
+          <Command>
+            <CommandInput placeholder="Miestas" />
+            <CommandEmpty>Miestas nerastas.</CommandEmpty>
+            <CommandGroup>
+              <CommandList>
+                {citiesData?.map((framework) => (
+                  <CommandItem
+                    key={framework.cityTitle}
+                    value={framework.cityTitle}
+                    onSelect={(currentValue) => {
+                      setValueCity(
+                        currentValue === valueCity ? "" : currentValue
+                      );
+                      setOpenCity(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        valueCity === framework.cityTitle
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    {framework.cityTitle}
+                  </CommandItem>
+                ))}
+              </CommandList>
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
+
+      {!valueCategory && !valueCity ? jobsData?.data.map((job) => (
+                <div key={job.id}>
+                {job.category.title} {job.city.cityTitle} {job.title}
+              </div>
+      )): jobFilter?.map((job) => (
         <div key={job.id}>
           {job.category.title} {job.city.cityTitle} {job.title}
         </div>
       ))}
+
     </div>
   );
 };
