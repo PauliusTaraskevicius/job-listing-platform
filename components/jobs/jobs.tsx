@@ -17,15 +17,13 @@ import {
 } from "@/components/ui/tooltip";
 
 import { Badge } from "@/components/ui/badge";
-import { Category, City, Job } from "@prisma/client";
 
 import { Star } from "lucide-react";
 
+import { JobProps } from "@/lib/types";
+
 type Props = {
-  job: Job & {
-    category: Category;
-    city: City;
-  };
+  job: JobProps;
 };
 
 export const Jobs = ({ job }: Props) => {
@@ -91,7 +89,15 @@ export const Jobs = ({ job }: Props) => {
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            {paymentMethod === "BRUTO" ? "Bruto" : "Neto"}
+                            {paymentMethod === "BRUTO" ? (
+                              <p className="hover:bg-foreground/10 rounded-lg px-1 transition">
+                                Bruto
+                              </p>
+                            ) : (
+                              <p className="hover:bg-foreground/10 rounded-lg px-1 transition">
+                                Neto
+                              </p>
+                            )}
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>

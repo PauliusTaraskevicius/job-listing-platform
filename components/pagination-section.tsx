@@ -14,12 +14,12 @@ import {
 } from "@/components/ui/pagination";
 
 import { Jobs } from "./jobs/jobs";
-import { notFound } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
-import { Job } from "@prisma/client";
+import { Category, City, Job } from "@prisma/client";
+import { JobProps } from "@/lib/types";
 
 type Props = {
-  jobsData: Job[];
+  jobsData: JobProps[]
 };
 
 export const PaginationSection = ({ jobsData }: Props) => {
