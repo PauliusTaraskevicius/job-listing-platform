@@ -15,7 +15,6 @@ import {
 
 import { Jobs } from "./jobs/jobs";
 import { Skeleton } from "./ui/skeleton";
-import { Category, City, Job } from "@prisma/client";
 import { JobProps } from "@/lib/types";
 
 type Props = {
