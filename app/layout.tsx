@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Wrapper } from "@/components/wrapper";
-import { Navigation } from "@/components/navigation";
+import { Navigation } from "@/components/navigation/navigation";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";

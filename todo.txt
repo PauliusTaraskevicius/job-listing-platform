@@ -2,3 +2,4 @@
 - admin panel
 - tag modelis
 - text search fieldas salia filtru, su query-string or w/e
+- filter component parasyti tipa teisinga

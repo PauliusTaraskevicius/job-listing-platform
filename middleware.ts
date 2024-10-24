@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher(["/hiring"]);
+const isProtectedRoute = createRouteMatcher(["/hiring", "/profilis"]);
 export default clerkMiddleware((auth, req) => {
   if (isProtectedRoute(req)) {
     auth().protect();
