@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
+import { Switch } from "./theme-switcher";
 
 export const ModeToggle = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -19,25 +20,7 @@ export const ModeToggle = () => {
 
   return (
     <div>
-      {" "}
-      {theme === "light" && (
-        <Button
-          size="icon"
-          className="bg-transparent hover:bg-transparent"
-          onClick={() => setTheme("dark")}
-        >
-          <Moon className="size-7 text-black" />
-        </Button>
-      )}{" "}
-      {theme === "dark" && (
-        <Button
-          size="icon"
-          className="bg-transparent hover:bg-transparent"
-          onClick={() => setTheme("light")}
-        >
-          <Sun className="size-7 text-white" />
-        </Button>
-      )}
+      <Switch onClick={() => setTheme(theme === "light" ? "dark" : "light")} title={theme}/>
     </div>
   );
 };

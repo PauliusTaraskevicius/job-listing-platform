@@ -15,7 +15,7 @@ import {
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { ModeToggle } from "../mode-toggle";
 
 const navigationLinks = [
   {
@@ -42,7 +42,6 @@ const navigationLinks = [
 
 export const SidebarNavigation = () => {
   const activePath = usePathname();
-  const { user, isLoaded } = useUser();
 
   return (
     <aside className="sticky left-0 top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80 rounded-2xl border border-muted-foreground/20 px-4">
@@ -53,13 +52,13 @@ export const SidebarNavigation = () => {
         </Link>
       </div>
       <div className="flex items-center justify-center">
-      <Separator className="w-[90%]" />
+        <Separator className="w-[90%]" />
       </div>
       <div className="flex flex-col justify-center items-start gap-2">
         {navigationLinks.map((link) => (
           <Button
             className={cn(
-              "flex justify-start gap-2 rounded-full p-6 bg-transparent hover:bg-primary transition text-primary hover:text-white w-full",
+              "flex justify-start gap-2 rounded-full p-6 bg-transparent hover:bg-primary transition text-primary hover:text-white w-full hover:dark:text-black",
               activePath === link.href && "bg-primary"
             )}
             key={link.href}
@@ -73,9 +72,7 @@ export const SidebarNavigation = () => {
         ))}
       </div>
       <div className="flex flex-col justify-center items-center p-6">
-        <UserButton appearance={{ elements: { avatarBox: "size-9" } }} />
-        {!isLoaded && <Loader2 className="animate-spin" />}
-        <span className="text-primary font-medium">{user?.fullName}</span>
+        <ModeToggle />
       </div>
     </aside>
   );

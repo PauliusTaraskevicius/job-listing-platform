@@ -1,13 +1,10 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { useMedia } from "react-use";
 import { UserButton, useUser } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
-
-import { ModeToggle } from "../mode-toggle";
 
 import { BriefcaseBusiness, MonitorCog } from "lucide-react";
 import { MobileNavigation } from "./mobile-navigation";
@@ -20,9 +17,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export const Navigation = () => {
-  const path = usePathname();
   const isMobile = useMedia("(max-width: 1024px)", false);
-
   const { user } = useUser();
 
   if (isMobile) {
@@ -42,11 +37,9 @@ export const Navigation = () => {
             <Tooltip>
               <TooltipTrigger>
                 {" "}
-                <Button asChild>
-                  <UserButton
-                    appearance={{ elements: { avatarBox: "size-8" } }}
-                  />
-                </Button>
+                <UserButton
+                  appearance={{ elements: { avatarBox: "size-8" } }}
+                />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Mano profilis</p>
@@ -69,8 +62,6 @@ export const Navigation = () => {
               </Tooltip>
             </TooltipProvider>
           )}
-
-          <ModeToggle />
         </div>
 
         <Link href="/hiring">
