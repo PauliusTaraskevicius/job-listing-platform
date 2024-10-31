@@ -1,6 +1,5 @@
-import { Option } from "@/components/multiple-selector";
 
-export const OPTIONS: Option[] = [
+export const OPTIONS = [
   { title: "Vilnius", value: "Vilnius" },
   { title: "Kaunas", value: "Kaunas" },
   { title: "Klaipėda", value: "Klaipėda" },

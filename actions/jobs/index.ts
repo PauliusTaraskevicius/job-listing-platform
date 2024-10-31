@@ -74,4 +74,32 @@ export const getJobs = async () => {
   }
 };
 
+export const getUserJobs = async () => {
+  const { userId } = auth();
 
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  try {
+    const jobs = await db.job.findMany({
+      where: {
+        authorId: userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        category: true,
+        city: true,
+      },
+    });
+
+    return { data: jobs };
+  } catch (error) {
+    console.log("[GET_USER_JOBS]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};

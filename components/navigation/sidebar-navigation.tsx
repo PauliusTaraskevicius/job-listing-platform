@@ -20,7 +20,7 @@ import { ModeToggle } from "../mode-toggle";
 const navigationLinks = [
   {
     label: "Pagrindinis",
-    href: "/pagrindinis",
+    href: "/profilis",
     icon: <House />,
   },
   {
@@ -59,7 +59,8 @@ export const SidebarNavigation = () => {
           <Button
             className={cn(
               "flex justify-start gap-2 rounded-full p-6 bg-transparent hover:bg-primary transition text-primary hover:text-white w-full hover:dark:text-black",
-              activePath === link.href && "bg-primary text-white dark:text-black"
+              activePath === link.href &&
+                "bg-primary text-white dark:text-black"
             )}
             key={link.href}
             asChild
