@@ -1,7 +1,12 @@
+import { getUserJobs } from "@/actions/jobs";
+import { DataView } from "../profilis/components/data-view";
 
-export default function Page() {
+export default async function Page() {
+  const data = await getUserJobs();
+
   return (
-    <div>Mano skelbimai</div>
-  )
+    <div>
+      <DataView jobs={data.data} />
+    </div>
+  );
 }
-

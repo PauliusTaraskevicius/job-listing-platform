@@ -19,21 +19,22 @@ import { JobProps } from "@/lib/types";
 
 type Props = {
   jobsData: JobProps[]
+  itemsPerPageNumber: number;
 };
 
-export const PaginationSection = ({ jobsData }: Props) => {
+export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(20);
+  // const [itemsPerPage, setItemsPerPage] = useState<number>(20);
 
   const data = jobsData;
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstItemIndex = lastItemIndex - itemsPerPage;
+  const lastItemIndex = currentPage * itemsPerPageNumber;
+  const firstItemIndex = lastItemIndex - itemsPerPageNumber;
   const currentItems = data.slice(firstItemIndex, lastItemIndex);
   const totalItems = data.length;
 
   let pages = [];
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPageNumber); i++) {
     pages.push(i);
   }
 
@@ -71,7 +72,7 @@ export const PaginationSection = ({ jobsData }: Props) => {
           </Link>
         </div>
       ))}
-      <Pagination className="py-6">
+      <Pagination className="py-2">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious

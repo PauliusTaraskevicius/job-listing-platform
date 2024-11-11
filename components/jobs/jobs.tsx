@@ -51,22 +51,21 @@ export const Jobs = ({ job }: Props) => {
   return (
     <Card className="shadow-md">
       <CardHeader>
-        <CardTitle className="font-normal text-base leading-none tracking-wide">
+        <CardTitle className="font-normal text-sm lg:text-base leading-none tracking-wide">
           {company}
         </CardTitle>
         <CardDescription className="flex flex-col space-y-1">
           <div className="flex justify-between items-center">
             <div className="">
-              {" "}
               <div>
-                <h1 className="text-xl text-black dark:text-white font-semibold leading-none tracking-tight py-1">
+                <h1 className="lg:text-xl text-black dark:text-white font-semibold leading-none tracking-tight py-1">
                   {title}
                 </h1>
                 <div className="flex space-x-2">
-                  <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
+                  <span className="font-normal text-muted-foreground  lg:text-base leading-none tracking-normal">
                     {category.title},
                   </span>
-                  <span className="font-normal text-muted-foreground  text-base leading-none tracking-normal">
+                  <span className="font-normal text-muted-foreground  lg:text-base leading-none tracking-normal">
                     {city.cityTitle}
                   </span>
                 </div>

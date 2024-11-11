@@ -168,6 +168,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
 
       <PaginationSection
         jobsData={!valueCategory && !valueCity ? jobsData?.data : jobFilter}
+        itemsPerPageNumber={20}
       />
     </div>
   );

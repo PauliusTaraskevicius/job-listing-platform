@@ -9,13 +9,15 @@ import {
   File,
   FileCheck,
   House,
-  Loader2,
+
   Settings,
 } from "lucide-react";
+
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../mode-toggle";
+
 
 const navigationLinks = [
   {
@@ -44,7 +46,7 @@ export const SidebarNavigation = () => {
   const activePath = usePathname();
 
   return (
-    <aside className="sticky left-0 top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80 rounded-2xl border border-muted-foreground/20 px-4">
+    <aside className="sticky left-0 hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80 rounded-2xl border border-muted-foreground/20 px-4">
       <div>
         <Link href="/" className="flex justify-center items-center p-4 gap-2">
           <BriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />

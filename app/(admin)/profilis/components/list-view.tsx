@@ -4,8 +4,8 @@ type Props = {
   data: JobProps[];
 };
 
-const CardView = ({data}: Props) => {
-  return <div>CARD VIEW</div>;
+const ListView = ({ data }: Props) => {
+  return <div className="pb-12 lg:pb-0">LIST VIEW</div>;
 };
 
-export default CardView;
+export default ListView;
