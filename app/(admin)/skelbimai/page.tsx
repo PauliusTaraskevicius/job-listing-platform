@@ -1,12 +1,13 @@
 import { getUserJobs } from "@/actions/jobs";
-import { DataView } from "../profilis/components/data-view";
+import { DataTable } from "@/components/jobs/data-view/data-table";
+import { columns } from "@/components/jobs/data-view/columns";
 
 export default async function Page() {
   const data = await getUserJobs();
 
   return (
-    <div>
-      <DataView jobs={data.data} />
+    <div className="w-full px-4 lg:pl-2 lg:px-0">
+      <DataTable columns={columns} data={data.data} />
     </div>
   );
 }
