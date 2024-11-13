@@ -3,4 +3,4 @@
 - tag modelis
 - text search fieldas salia filtru, su query-string or w/e
 - filter component parasyti tipa teisinga
-- make list and card views
+- edit, delete listing 

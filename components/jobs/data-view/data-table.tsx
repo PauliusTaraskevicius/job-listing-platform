@@ -72,20 +72,20 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center pb-2 ">
-        <div className="flex space-x-4 w-full items-center">
-          <Input
-            placeholder="Ieškoti pagal pavadinimą..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm relative"
-          />
-          <Search className="size-5 absolute right-3 text-muted-foreground z-10" />
-          <div className="hidden lg:block text-muted-foreground">
-            {format(new Date(), "yyyy. MMMM d", { locale: lt })}
-          </div>
+        
+        <Input
+          placeholder="Ieškoti pagal pavadinimą..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("title")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+
+        <div className="hidden lg:block text-muted-foreground pl-2">
+          {format(new Date(), "yyyy. MMMM d", { locale: lt })}
         </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

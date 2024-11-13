@@ -28,7 +28,7 @@ export const columns: ColumnDef<JobProps>[] = [
   },
   {
     accessorKey: "salary",
-    header: () => <div className="text-left">Atlyginimas</div>,
+    header: () => <div>Atlyginimas</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("salary"));
       const formatted = new Intl.NumberFormat("lt-LT", {
@@ -36,7 +36,7 @@ export const columns: ColumnDef<JobProps>[] = [
         currency: "EUR",
       }).format(amount);
 
-      return <div className="text-left font-medium">{formatted}</div>;
+      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {
@@ -44,20 +44,19 @@ export const columns: ColumnDef<JobProps>[] = [
     accessorFn: (row) => row.category.title,
     header: ({ column }) => {
       return (
-        <div className="">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="text-right"
-          >
-            Kategorija
-            <ArrowUpDown />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Kategorija
+          <ArrowUpDown />
+        </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("category")}</div>
+      <div className="capitalize text-right pr-4">
+        {row.getValue("category")}
+      </div>
     ),
   },
   {
@@ -75,7 +74,7 @@ export const columns: ColumnDef<JobProps>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize ">{row.getValue("city")}</div>
+      <div className="capitalize text-right pr-4">{row.getValue("city")}</div>
     ),
   },
   {
@@ -92,6 +91,11 @@ export const columns: ColumnDef<JobProps>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            {/* <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(salary.id)}
+            >
+              Copy payment ID
+            </DropdownMenuItem> */}
             <DropdownMenuItem>
               <div className="flex items-center ">
                 <Pencil className="size-4 mr-1" />
