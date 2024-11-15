@@ -24,3 +24,9 @@ export type JobProps = {
   category: CategoryProps;
   city: CityProps;
 };
+
+
+export interface PostsPage {
+  jobs: JobProps[];
+  nextCursor: string | null;
+}

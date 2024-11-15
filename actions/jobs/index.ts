@@ -103,3 +103,35 @@ export const getUserJobs = async () => {
     });
   }
 };
+
+export const deleteJobListing = async (id: string) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  try {
+    const job = await db.job.findUnique({
+      where: { id },
+    });
+
+    if (!job) throw new NextResponse("Skelbimas nerastas", { status: 401 });
+
+    if (job.authorId !== userId)
+      throw new NextResponse("Skelbimą ištrinti gali tik autorius.", {
+        status: 401,
+      });
+
+    const deleteJob = await db.job.delete({
+      where: { id },
+    });
+
+    return deleteJob;
+  } catch (error) {
+    console.log("[DELETE_JOB_LISTING]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};

@@ -8,7 +8,7 @@ export default async function MainLayout({
 }>) {
   return (
     <div className="flex">
-      <div className="flex">
+      <div className="flex py-2">
         <SidebarNavigation />
       </div>
       <div className="mx-auto flex flex-col w-full max-w-7xl grow gap-5">

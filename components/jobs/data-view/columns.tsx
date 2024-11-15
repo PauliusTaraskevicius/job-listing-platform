@@ -10,13 +10,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { Pencil } from "lucide-react";
 import { Trash } from "lucide-react";
+import DeleteJobDialog from "../delete-job-dialog";
+import { useState } from "react";
 
 export const columns: ColumnDef<JobProps>[] = [
   {
@@ -79,37 +79,41 @@ export const columns: ColumnDef<JobProps>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: function Cell({ row }) {
       const salary = row.original;
 
+      const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false);
+
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Meniu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(salary.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem> */}
-            <DropdownMenuItem>
-              <div className="flex items-center ">
-                <Pencil className="size-4 mr-1" />
-                Redaguoti
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div className="flex items-center ">
-                <Trash className="size-4 mr-1" />
-                Ištrinti
-              </div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Meniu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <div className="flex items-center ">
+                  <Pencil className="size-4 mr-1" />
+                  Redaguoti
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
+                <div className="flex items-center">
+                  <Trash className="size-4 mr-1" />
+                  Ištrinti
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DeleteJobDialog
+            job={salary}
+            open={showDeleteDialog}
+            onClose={() => setShowDeleteDialog(false)}
+          />
+        </>
       );
     },
   },
