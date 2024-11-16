@@ -43,7 +43,7 @@ const RichTextField = ({ description, onChange, className }: Props) => {
         placeholder: "Darbo vietos aprašymas",
       }),
     ],
-    // content: "Darbo vietos aprašymas",
+    // content: description,
     immediatelyRender: false,
     editorProps: {
       attributes: {

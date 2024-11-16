@@ -17,6 +17,7 @@ import { Pencil } from "lucide-react";
 import { Trash } from "lucide-react";
 import DeleteJobDialog from "../delete-job-dialog";
 import { useState } from "react";
+import Link from "next/link";
 
 export const columns: ColumnDef<JobProps>[] = [
   {
@@ -95,10 +96,12 @@ export const columns: ColumnDef<JobProps>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <div className="flex items-center ">
-                  <Pencil className="size-4 mr-1" />
-                  Redaguoti
-                </div>
+                <Link href={`/skelbimai/${salary.id}`}>
+                  <div className="flex items-center ">
+                    <Pencil className="size-4 mr-1" />
+                    Redaguoti
+                  </div>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
                 <div className="flex items-center">

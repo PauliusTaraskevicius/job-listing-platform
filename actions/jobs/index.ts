@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
+import { createJobSchema } from "./validation";
 
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
@@ -74,6 +75,21 @@ export const getJobs = async () => {
   }
 };
 
+export const getJobById = async (id: string) => {
+  try {
+    const job = await db.job.findUnique({
+      where: { id },
+    });
+
+    return job;
+  } catch (error) {
+    console.log("[GET_JOB_BY_ID]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
 export const getUserJobs = async () => {
   const { userId } = auth();
 
@@ -130,6 +146,34 @@ export const deleteJobListing = async (id: string) => {
     return deleteJob;
   } catch (error) {
     console.log("[DELETE_JOB_LISTING]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
+export const editJobListing = async (id: string, values: jobType) => {
+  const validatedValues = createJobSchema.parse(values);
+
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  try {
+    const updatedJob = await db.$transaction(async (tx) => {
+      const updatedJob = await tx.job.update({
+        where: { id: id },
+        data: validatedValues,
+      });
+
+      return updatedJob;
+    });
+
+    return updatedJob;
+  } catch (error) {
+    console.log("[EDIT_JOB_LISTING]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

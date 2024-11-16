@@ -1,5 +1,4 @@
-"use client";
-import { useRouter } from "next/navigation";
+'use client'
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,20 +24,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
 import { Input } from "@/components/ui/input";
 import { Banner } from "../banner";
 
-import { useMutation } from "@tanstack/react-query";
-import { useToast } from "@/components/ui/use-toast";
 import { createJobSchema } from "@/actions/jobs/validation";
-import { createJob } from "@/actions/jobs";
+
 import { Switch } from "@/components/ui/switch";
 
 import { Category, City } from "@prisma/client";
 import RichTextField from "@/components/rich-text-field/rich-text-field";
+import { JobProps } from "@/lib/types";
+import { useUpdateJobListing } from "@/components/jobs/mutation";
+import { jobType } from "@/actions/jobs/type";
 
 type Props = {
+  job: JobProps;
   categories: {
     data: Category[];
   };
@@ -47,45 +47,27 @@ type Props = {
   };
 };
 
-export const CreateJobForm = ({ categories, cities }: Props) => {
-  const { toast } = useToast();
-  const route = useRouter();
-
+export const EditJobForm = ({ job, categories, cities }: Props) => {
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
-      title: "",
-      company: "",
-      description: "",
-      applyUrl: "",
-      paymentMethod: "BRUTO",
-      salary: "",
-      remote: false,
-      premium: false,
+      title: job.title,
+      company: job.company,
+      description: job.description,
+      applyUrl: job.applyUrl,
+      paymentMethod: job.paymentMethod,
+      salary: job.salary,
+      remote: job.remote,
+      premium: job.premium,
       categoryId: "",
       cityId: "",
     },
   });
 
-  const { mutate: postJob, isPending } = useMutation({
-    mutationFn: createJob,
+  const mutation = useUpdateJobListing(job.id);
 
-    onSuccess: () => {
-      toast({
-        title: "Skelbimas sėkmingai sukurtas.",
-      }),
-        route.push("/");
-    },
-    onError: () => {
-      toast({
-        title: "Įvyko klaida. Bandykite dar kartą",
-        variant: "destructive",
-      });
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof createJobSchema>) {
-    postJob(values);
+  async function onSubmit(values: z.infer<typeof createJobSchema>) {
+    mutation.mutate({ values });
   }
 
   return (
@@ -103,7 +85,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                   <Input
                     placeholder="Įmonės pavadinimas"
                     {...field}
-                    disabled={isPending}
+                    disabled={mutation.isPending}
                     type="text"
                   />
                 </FormControl>
@@ -122,7 +104,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                   <Input
                     placeholder="Darbo vietos pavadinimas"
                     {...field}
-                    disabled={isPending}
+                    disabled={mutation.isPending}
                   />
                 </FormControl>
                 <FormMessage />
@@ -138,7 +120,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <FormLabel>Kategorija</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  disabled={isPending}
+                  disabled={mutation.isPending}
                   value={field.value}
                   defaultValue={field.value}
                 >
@@ -171,7 +153,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <FormLabel>Miestas</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  disabled={isPending}
+                  disabled={mutation.isPending}
                   value={field.value}
                   defaultValue={field.value}
                 >
@@ -247,7 +229,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                     <Input
                       placeholder="1200 - 1500 &euro;/mėn"
                       {...field}
-                      disabled={isPending}
+                      disabled={mutation.isPending}
                       type="tel"
                       pattern="^[0-9-]*$"
                       maxLength={12}
@@ -266,7 +248,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                   <FormLabel>Darbo užmokesčio tipas</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    disabled={isPending}
+                    disabled={mutation.isPending}
                     value={field.value}
                     defaultValue={field.value}
                   >
@@ -301,14 +283,14 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                   <Input
                     placeholder="Aplikacijos nuoroda"
                     {...field}
-                    disabled={isPending}
+                    disabled={mutation.isPending}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button disabled={isPending} type="submit">
+          <Button disabled={mutation.isPending} type="submit">
             Submit
           </Button>
         </form>
