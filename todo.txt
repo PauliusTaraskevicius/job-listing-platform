@@ -2,5 +2,5 @@
 - admin panel
 - tag modelis
 - text search fieldas salia filtru, su query-string or w/e
-- filter component parasyti tipa teisinga
-- edit, delete listing 
+- pataisyti tipus
+- fix edit to show category, city and description as rich text field
