@@ -79,6 +79,10 @@ export const getJobById = async (id: string) => {
   try {
     const job = await db.job.findUnique({
       where: { id },
+      include: {
+        category: true,
+        city: true,
+      },
     });
 
     return job;

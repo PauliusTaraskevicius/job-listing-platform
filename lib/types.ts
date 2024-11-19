@@ -1,15 +1,4 @@
-import { PaymentMethod } from "@prisma/client";
-
-export type CategoryProps = {
-  id: string;
-  title: string;
-  jobs: JobProps[];
-};
-export type CityProps = {
-  id: string;
-  cityTitle: string;
-  jobs: JobProps[];
-};
+import { Category, City, PaymentMethod } from "@prisma/client";
 
 export type JobProps = {
   id: string;
@@ -21,10 +10,9 @@ export type JobProps = {
   salary: string;
   premium?: boolean;
   remote?: boolean;
-  category: CategoryProps;
-  city: CityProps;
+  category: Category;
+  city: City;
 };
-
 
 export interface PostsPage {
   jobs: JobProps[];
