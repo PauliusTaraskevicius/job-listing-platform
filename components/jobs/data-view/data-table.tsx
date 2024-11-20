@@ -26,14 +26,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Search } from "lucide-react";
+import { JobProps } from "@/lib/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -72,7 +65,6 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center pb-2 ">
-        
         <Input
           placeholder="Ieškoti pagal pavadinimą..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -85,33 +77,6 @@ export function DataTable<TData, TValue>({
         <div className="hidden lg:block text-muted-foreground pl-2">
           {format(new Date(), "yyyy. MMMM d", { locale: lt })}
         </div>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Filtrai <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="rounded-md border">
         <Table>

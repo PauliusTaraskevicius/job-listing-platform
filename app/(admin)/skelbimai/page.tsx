@@ -2,7 +2,7 @@ import { getUserJobs } from "@/actions/jobs";
 import { DataTable } from "@/components/jobs/data-view/data-table";
 import { columns } from "@/components/jobs/data-view/columns";
 
-export default async function Page() {
+export default async function Page() { 
   const data = await getUserJobs();
 
   return (

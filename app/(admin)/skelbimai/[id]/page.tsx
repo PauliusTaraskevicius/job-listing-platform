@@ -10,12 +10,11 @@ type PageProps = {
 export default async function Page({ params: { id } }: PageProps) {
   const categories = await getCategories();
   const cities = await getCities();
-  const job = await getJobById(id)
+  const job = await getJobById(id);
 
   return (
     <div>
       <EditJobForm categories={categories} cities={cities} job={job} />
-
     </div>
   );
 }

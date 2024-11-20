@@ -35,9 +35,11 @@ import { Category, City } from "@prisma/client";
 import RichTextField from "@/components/rich-text-field/rich-text-field";
 import { JobProps } from "@/lib/types";
 import { useUpdateJobListing } from "@/components/jobs/mutation";
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 type Props = {
-  job: JobProps;
+  job: JobProps | null;
   categories: {
     data: Category[];
   };
@@ -47,24 +49,25 @@ type Props = {
 };
 
 export const EditJobForm = ({ job, categories, cities }: Props) => {
+
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
-      title: job.title,
-      company: job.company,
-      description: job.description,
-      applyUrl: job.applyUrl,
-      paymentMethod: job.paymentMethod,
-      salary: job.salary,
-      remote: job.remote,
-      premium: job.premium,
+      title: job!.title,
+      company: job!.company,
+      description: job!.description,
+      applyUrl: job!.applyUrl,
+      paymentMethod: job!.paymentMethod,
+      salary: job!.salary,
+      remote: job!.remote!!,
+      premium: job!.premium!!,
 
-      categoryId: "",
-      cityId: "",
+      categoryId: '',
+      cityId: '',
     },
   });
 
-  const mutation = useUpdateJobListing(job.id);
+  const mutation = useUpdateJobListing(job!.id);
 
   async function onSubmit(values: z.infer<typeof createJobSchema>) {
     mutation.mutate({ values });

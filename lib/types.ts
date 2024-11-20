@@ -8,8 +8,8 @@ export type JobProps = {
   applyUrl: string;
   paymentMethod: PaymentMethod;
   salary: string;
-  premium?: boolean;
-  remote?: boolean;
+  premium?: boolean | null;
+  remote?: boolean | null;
   category: Category;
   city: City;
 };

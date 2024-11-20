@@ -76,6 +76,11 @@ export const getJobs = async () => {
 };
 
 export const getJobById = async (id: string) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
   try {
     const job = await db.job.findUnique({
       where: { id },

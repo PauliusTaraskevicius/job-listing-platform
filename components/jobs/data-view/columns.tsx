@@ -22,22 +22,40 @@ import Link from "next/link";
 export const columns: ColumnDef<JobProps>[] = [
   {
     accessorKey: "title",
-    header: "Pavadinimas",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Pavadinimas
+          <ArrowUpDown />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("title")}</div>
     ),
   },
   {
     accessorKey: "salary",
-    header: () => <div>Atlyginimas</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Atlyginimas
+          <ArrowUpDown />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("salary"));
-      const formatted = new Intl.NumberFormat("lt-LT", {
-        style: "currency",
-        currency: "EUR",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+      return (
+        <div className="text-center font-medium">
+          {row.getValue("salary")}&#8364;
+        </div>
+      );
     },
   },
   {
@@ -55,9 +73,7 @@ export const columns: ColumnDef<JobProps>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize text-right pr-4">
-        {row.getValue("category")}
-      </div>
+      <div className="capitalize text-center">{row.getValue("category")}</div>
     ),
   },
   {
@@ -75,7 +91,7 @@ export const columns: ColumnDef<JobProps>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize text-right pr-4">{row.getValue("city")}</div>
+      <div className="capitalize text-center">{row.getValue("city")}</div>
     ),
   },
   {
