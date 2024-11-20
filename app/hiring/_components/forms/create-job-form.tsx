@@ -227,7 +227,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <FormLabel>Darbo vietos aprašymas</FormLabel>
                 <FormControl>
                   <RichTextField
-                    description={field.name}
+                    description={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>

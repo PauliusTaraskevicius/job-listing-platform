@@ -14,7 +14,7 @@ import ToolBar from "./toolbar";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  description: string;
+  description?: string;
   onChange: (richText: string) => void;
   className?: string;
 };
@@ -43,7 +43,7 @@ const RichTextField = ({ description, onChange, className }: Props) => {
         placeholder: "Darbo vietos aprašymas",
       }),
     ],
-    // content: description,
+    content: !description ? Placeholder : description,
     immediatelyRender: false,
     editorProps: {
       attributes: {

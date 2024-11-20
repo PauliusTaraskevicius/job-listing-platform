@@ -35,7 +35,6 @@ import { Category, City } from "@prisma/client";
 import RichTextField from "@/components/rich-text-field/rich-text-field";
 import { JobProps } from "@/lib/types";
 import { useUpdateJobListing } from "@/components/jobs/mutation";
-import { useState } from "react";
 
 type Props = {
   job: JobProps;
@@ -48,8 +47,6 @@ type Props = {
 };
 
 export const EditJobForm = ({ job, categories, cities }: Props) => {
-  const [defaultCategory, setDefaultCategory] = useState<string>("");
-
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
@@ -62,8 +59,8 @@ export const EditJobForm = ({ job, categories, cities }: Props) => {
       remote: job.remote,
       premium: job.premium,
 
-      categoryId: job.category.title,
-      cityId: job.city.cityTitle,
+      categoryId: "",
+      cityId: "",
     },
   });
 
@@ -212,7 +209,7 @@ export const EditJobForm = ({ job, categories, cities }: Props) => {
                 <FormLabel>Darbo vietos aprašymas</FormLabel>
                 <FormControl>
                   <RichTextField
-                    description={field.name}
+                    description={field.value}
                     onChange={field.onChange}
                   />
                 </FormControl>

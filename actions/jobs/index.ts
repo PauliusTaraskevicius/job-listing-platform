@@ -170,6 +170,10 @@ export const editJobListing = async (id: string, values: jobType) => {
       const updatedJob = await tx.job.update({
         where: { id: id },
         data: validatedValues,
+        include: {
+          category: true,
+          city: true,
+        },
       });
 
       return updatedJob;
