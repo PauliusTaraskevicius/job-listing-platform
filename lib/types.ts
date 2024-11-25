@@ -18,3 +18,7 @@ export interface PostsPage {
   jobs: JobProps[];
   nextCursor: string | null;
 }
+
+export interface BookmarkInfo {
+  isBookmarkedByUser: boolean;
+}

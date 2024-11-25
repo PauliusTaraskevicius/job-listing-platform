@@ -192,3 +192,87 @@ export const editJobListing = async (id: string, values: jobType) => {
     });
   }
 };
+
+export const bookmark = async (jobId: string) => {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    }
+
+    await db.bookmark.upsert({
+      where: {
+        authorId_jobId: {
+          authorId: userId,
+          jobId,
+        },
+      },
+      create: {
+        authorId: userId,
+        jobId,
+      },
+      update: {},
+    });
+
+    return bookmark;
+  } catch (error) {
+    console.log("[BOOKMARK]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
+export const deleteBookmark = async (jobId: string) => {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    }
+
+    const deleteBookmark = await db.bookmark.deleteMany({
+      where: {
+        authorId: userId,
+        jobId,
+      },
+    });
+
+    return deleteBookmark;
+  } catch (error) {
+    console.log("[DELETE_BOOKMARK]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
+export const getBookmarks = async () => {
+  try {
+    const { userId } = auth();
+
+    if (!userId) {
+      throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    }
+
+    const bookmarks = await db.bookmark.findMany({
+      where: {
+        authorId: userId,
+      },
+      include: {
+        job: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return bookmarks;
+  } catch (error) {
+    console.log("[GET_BOOKMARKS]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
