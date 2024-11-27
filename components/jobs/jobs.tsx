@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+import { useUser } from "@clerk/clerk-react";
 import {
   Card,
   CardDescription,
@@ -18,9 +18,8 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 
-import { Star } from "lucide-react";
-
 import { JobProps } from "@/lib/types";
+import BookmarkButton from "./bookmark-button";
 
 type Props = {
   job: JobProps;
@@ -40,6 +39,8 @@ export const Jobs = ({ job }: Props) => {
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
+  const { user, isSignedIn } = useUser();
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -51,6 +52,7 @@ export const Jobs = ({ job }: Props) => {
   return (
     <Card className="shadow-md">
       <CardHeader>
+        
         <CardTitle className="font-normal text-sm lg:text-base leading-none tracking-wide">
           {company}
         </CardTitle>
@@ -111,7 +113,16 @@ export const Jobs = ({ job }: Props) => {
                   </div>
                 </div>
               </div>
-              <Star className="size-5 hover:fill-yellow-300 hover:text-yellow-300 transition" />
+              {isSignedIn && (
+                <BookmarkButton
+                  jobId={job.id}
+                  initialState={{
+                    isBookmarkedByUser: job.bookmarks.some(
+                      (bookmark) => bookmark.authorId === user?.id
+                    ),
+                  }}
+                />
+              )}
             </div>
           </div>
         </CardDescription>

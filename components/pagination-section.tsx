@@ -18,7 +18,7 @@ import { Skeleton } from "./ui/skeleton";
 import { JobProps } from "@/lib/types";
 
 type Props = {
-  jobsData: JobProps[]
+  jobsData: JobProps[];
   itemsPerPageNumber: number;
 };
 
@@ -67,9 +67,7 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
           key={job.title}
           className="w-full py-1.5 cursor-pointer lg:px-0 px-1"
         >
-          <Link href={`/job/${job.id}`}>
-            <Jobs job={job} />
-          </Link>
+          <Jobs job={job} />
         </div>
       ))}
       <Pagination className="py-2">

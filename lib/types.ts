@@ -1,4 +1,4 @@
-import { Category, City, PaymentMethod } from "@prisma/client";
+import { Bookmark, Category, City, PaymentMethod } from "@prisma/client";
 
 export type JobProps = {
   id: string;
@@ -10,6 +10,7 @@ export type JobProps = {
   salary: string;
   premium?: boolean | null;
   remote?: boolean | null;
+  bookmarks: Bookmark[];
   category: Category;
   city: City;
 };

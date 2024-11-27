@@ -7,6 +7,7 @@ import { NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
+import { BookmarkInfo } from "@/lib/types";
 
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
@@ -63,6 +64,7 @@ export const getJobs = async () => {
       include: {
         category: true,
         city: true,
+        bookmarks: true,
       },
     });
 
@@ -87,6 +89,11 @@ export const getJobById = async (id: string) => {
       include: {
         category: true,
         city: true,
+        bookmarks: {
+          where: {
+            authorId: userId,
+          },
+        },
       },
     });
 
@@ -193,7 +200,7 @@ export const editJobListing = async (id: string, values: jobType) => {
   }
 };
 
-export const bookmark = async (jobId: string) => {
+export const createBookmark = async (jobId: string) => {
   try {
     const { userId } = auth();
 
@@ -201,7 +208,7 @@ export const bookmark = async (jobId: string) => {
       throw new NextResponse("Vartotojas nerastas", { status: 401 });
     }
 
-    await db.bookmark.upsert({
+    const bookmark = await db.bookmark.upsert({
       where: {
         authorId_jobId: {
           authorId: userId,
@@ -215,9 +222,13 @@ export const bookmark = async (jobId: string) => {
       update: {},
     });
 
-    return bookmark;
+    const data: BookmarkInfo = {
+      isBookmarkedByUser: !!bookmark,
+    };
+
+    return data;
   } catch (error) {
-    console.log("[BOOKMARK]", error);
+    console.log("[CREATE_BOOKMARK]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });
