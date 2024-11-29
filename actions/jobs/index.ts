@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
-import { BookmarkInfo } from "@/lib/types";
+import { BookmarkInfo, BookmarkProps } from "@/lib/types";
 
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
@@ -65,7 +65,6 @@ export const getJobs = async () => {
         category: true,
         city: true,
         bookmarks: true,
-        author: true,
       },
     });
 
@@ -127,6 +126,41 @@ export const getUserJobs = async () => {
         city: true,
         author: true,
         bookmarks: true,
+      },
+    });
+
+    return { data: jobs };
+  } catch (error) {
+    console.log("[GET_USER_JOBS]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
+export const getUserJobsWithBookmarks = async () => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  try {
+    const jobs = await db.bookmark.findMany({
+      where: {
+        authorId: userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        job: {
+          include: {
+            category: true,
+            city: true,
+            bookmarks: true,
+          },
+        },
       },
     });
 
