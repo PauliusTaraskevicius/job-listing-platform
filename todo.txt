@@ -3,4 +3,4 @@
 - tag modelis
 - text search fieldas salia filtru, su query-string or w/e
 - pataisyti tipus
-- fix edit to show category, city and description as rich text field
+- dont show bookmark button to the owner of the job listing

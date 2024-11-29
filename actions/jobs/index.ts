@@ -65,6 +65,7 @@ export const getJobs = async () => {
         category: true,
         city: true,
         bookmarks: true,
+        author: true,
       },
     });
 
@@ -124,6 +125,8 @@ export const getUserJobs = async () => {
       include: {
         category: true,
         city: true,
+        author: true,
+        bookmarks: true,
       },
     });
 
@@ -157,6 +160,9 @@ export const deleteJobListing = async (id: string) => {
 
     const deleteJob = await db.job.delete({
       where: { id },
+      include: {
+        bookmarks: true,
+      },
     });
 
     return deleteJob;

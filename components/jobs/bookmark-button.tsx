@@ -36,7 +36,7 @@ const BookmarkButton = ({ jobId, initialState }: BookmarkButtonProps) => {
       data.isBookmarkedByUser ? deleteBookmark(jobId) : createBookmark(jobId),
     onMutate: async () => {
       toast({
-        description: `Darbko skelbimas ${
+        description: `Darbo skelbimas ${
           data.isBookmarkedByUser
             ? "ištrintas iš archyvų"
             : "išsaugotas archyve"

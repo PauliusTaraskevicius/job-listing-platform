@@ -1,3 +1,4 @@
+import { User } from "@clerk/nextjs/server";
 import { Bookmark, Category, City, PaymentMethod } from "@prisma/client";
 
 export type JobProps = {
@@ -13,6 +14,7 @@ export type JobProps = {
   bookmarks: Bookmark[];
   category: Category;
   city: City;
+  author: User;
 };
 
 export interface PostsPage {
