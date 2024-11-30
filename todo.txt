@@ -5,3 +5,4 @@
 - pataisyti tipus
 - dont show bookmark button to the owner of the job listing
 - separate data table, columns for bookmarked jobs.
+- parasyti bookmark type ir ideti i columns
