@@ -1,16 +1,15 @@
 import { getUserJobsWithBookmarks } from "@/actions/jobs";
-import Bookmarks from "@/components/jobs/bookmarks";
-
-import { columns } from "@/components/jobs/data-view/columns";
-import { DataTable } from "@/components/jobs/data-view/data-table";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns";
+import { useQuery } from "@tanstack/react-query";
 
 export default async function Page() {
   const data = await getUserJobsWithBookmarks();
 
+
   return (
-    <div>
-      <Bookmarks />
-      <DataTable columns={columns} data={data.data} />
+    <div className="w-full px-4 lg:pl-2 lg:px-0 py-2">
+      <DataTable columns={columns} data={data} />
     </div>
   );
 }

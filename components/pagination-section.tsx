@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 import {
   Pagination,
@@ -16,9 +15,13 @@ import {
 import { Jobs } from "./jobs/jobs";
 import { Skeleton } from "./ui/skeleton";
 import { JobProps } from "@/lib/types";
+import { Category, City } from "@prisma/client";
 
 type Props = {
-  jobsData: JobProps[];
+  jobsData: JobProps[] & {
+    category: Category;
+    city: City;
+  }
   itemsPerPageNumber: number;
 };
 

@@ -111,7 +111,7 @@ export const Jobs = ({ job }: Props) => {
                       </TooltipProvider>
                     </span>
                   </div>
-                </div>
+                </div> 
               </div>
               {isSignedIn && (
                 <BookmarkButton

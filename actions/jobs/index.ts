@@ -8,7 +8,7 @@ import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
 import { BookmarkInfo, BookmarkProps } from "@/lib/types";
-
+import { revalidatePath } from "next/cache";
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
 
@@ -138,41 +138,6 @@ export const getUserJobs = async () => {
   }
 };
 
-export const getUserJobsWithBookmarks = async () => {
-  const { userId } = auth();
-
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
-
-  try {
-    const jobs = await db.bookmark.findMany({
-      where: {
-        authorId: userId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        job: {
-          include: {
-            category: true,
-            city: true,
-            bookmarks: true,
-          },
-        },
-      },
-    });
-
-    return { data: jobs };
-  } catch (error) {
-    console.log("[GET_USER_JOBS]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
-  }
-};
-
 export const deleteJobListing = async (id: string) => {
   const { userId } = auth();
 
@@ -290,6 +255,8 @@ export const deleteBookmark = async (jobId: string) => {
       },
     });
 
+    revalidatePath("/");
+
     return deleteBookmark;
   } catch (error) {
     console.log("[DELETE_BOOKMARK]", error);
@@ -299,29 +266,36 @@ export const deleteBookmark = async (jobId: string) => {
   }
 };
 
-export const getBookmarks = async () => {
+export const getUserJobsWithBookmarks = async () => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
   try {
-    const { userId } = auth();
-
-    if (!userId) {
-      throw new NextResponse("Vartotojas nerastas", { status: 401 });
-    }
-
     const bookmarks = await db.bookmark.findMany({
       where: {
         authorId: userId,
       },
-      include: {
-        job: true,
-      },
       orderBy: {
         createdAt: "desc",
+      },
+      include: {
+        job: {
+          include: {
+            category: true,
+            city: true,
+            bookmarks: true,
+            author: true,
+          },
+        },
       },
     });
 
     return bookmarks;
   } catch (error) {
-    console.log("[GET_BOOKMARKS]", error);
+    console.log("[GET_USER_JOBS_WITH_BOOKMARKS]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });
