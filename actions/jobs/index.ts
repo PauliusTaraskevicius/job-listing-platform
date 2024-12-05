@@ -231,6 +231,8 @@ export const createBookmark = async (jobId: string) => {
       isBookmarkedByUser: !!bookmark,
     };
 
+    revalidatePath("/issaugoti_skelbimai");
+
     return data;
   } catch (error) {
     console.log("[CREATE_BOOKMARK]", error);
@@ -255,7 +257,7 @@ export const deleteBookmark = async (jobId: string) => {
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/issaugoti_skelbimai");
 
     return deleteBookmark;
   } catch (error) {
@@ -278,18 +280,18 @@ export const getUserJobsWithBookmarks = async () => {
       where: {
         authorId: userId,
       },
-      orderBy: {
-        createdAt: "desc",
-      },
       include: {
         job: {
           include: {
             category: true,
             city: true,
             bookmarks: true,
-            author: true,
           },
         },
+      },
+
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

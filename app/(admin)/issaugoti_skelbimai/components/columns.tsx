@@ -8,7 +8,8 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import BookmarkButton from "@/components/jobs/bookmark-button";
-import { useUser } from "@clerk/nextjs";
+
+import { useAuth } from "@clerk/nextjs";
 
 export const columns: ColumnDef<UserBookmarkedJobs>[] = [
   {
@@ -90,19 +91,18 @@ export const columns: ColumnDef<UserBookmarkedJobs>[] = [
   {
     id: "actions",
     cell: function Cell({ row }) {
-      const salary = row.original;
-
-      const { user } = useUser();
+      const { userId } = useAuth();
+      const bookmark = row.original;
 
       return (
         <>
           <BookmarkButton
             initialState={{
-              isBookmarkedByUser: salary.job.bookmarks.some(
-                (bookmark) => bookmark.authorId === user?.id
+              isBookmarkedByUser: bookmark.job.bookmarks.some(
+                (bookmark) => bookmark.authorId === userId
               ),
             }}
-            jobId={salary.job.id}
+            jobId={bookmark.job.id}
           />
         </>
       );

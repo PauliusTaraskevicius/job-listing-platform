@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/nextjs";
 import {
   Card,
   CardDescription,
@@ -31,7 +31,6 @@ export const Jobs = ({ job }: Props) => {
     title,
     category,
     city,
-    premium,
     remote,
     salary,
     paymentMethod,
@@ -39,7 +38,7 @@ export const Jobs = ({ job }: Props) => {
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  const { user, isSignedIn } = useUser();
+  const { userId, isSignedIn } = useAuth();
 
   useEffect(() => {
     setIsMounted(true);
@@ -52,7 +51,6 @@ export const Jobs = ({ job }: Props) => {
   return (
     <Card className="shadow-md">
       <CardHeader>
-        
         <CardTitle className="font-normal text-sm lg:text-base leading-none tracking-wide">
           {company}
         </CardTitle>
@@ -111,14 +109,15 @@ export const Jobs = ({ job }: Props) => {
                       </TooltipProvider>
                     </span>
                   </div>
-                </div> 
+                </div>
               </div>
+
               {isSignedIn && (
                 <BookmarkButton
                   jobId={job.id}
                   initialState={{
                     isBookmarkedByUser: job.bookmarks.some(
-                      (bookmark) => bookmark.authorId === user?.id
+                      (bookmark) => bookmark.authorId === userId
                     ),
                   }}
                 />

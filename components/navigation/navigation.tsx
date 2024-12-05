@@ -6,8 +6,10 @@ import { UserButton, useUser } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
 
-import { BriefcaseBusiness, MonitorCog } from "lucide-react";
+import { BriefcaseBusiness, Loader2, MonitorCog } from "lucide-react";
 import { MobileNavigation } from "./mobile-navigation";
+
+import { useAuth } from "@clerk/nextjs";
 
 import {
   Tooltip,
@@ -18,7 +20,9 @@ import {
 
 export const Navigation = () => {
   const isMobile = useMedia("(max-width: 1024px)", false);
-  const { user } = useUser();
+
+  const { isLoaded } = useAuth();
+  const {isLoaded: loaded} = useUser()
 
   if (isMobile) {
     return <MobileNavigation />;
@@ -37,6 +41,7 @@ export const Navigation = () => {
             <Tooltip>
               <TooltipTrigger>
                 {" "}
+                {!loaded && <Loader2 className="size-6 animate-spin"/>}
                 <UserButton
                   appearance={{ elements: { avatarBox: "size-8" } }}
                 />
@@ -47,7 +52,7 @@ export const Navigation = () => {
             </Tooltip>
           </TooltipProvider>
 
-          {user && (
+          {isLoaded && (
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

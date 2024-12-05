@@ -1,7 +1,6 @@
 import { getUserJobsWithBookmarks } from "@/actions/jobs";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
-import { useQuery } from "@tanstack/react-query";
 
 export default async function Page() {
   const data = await getUserJobsWithBookmarks();

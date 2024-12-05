@@ -10,7 +10,7 @@ import {
 import { useToast } from "../ui/use-toast";
 import { createBookmark, deleteBookmark } from "@/actions/jobs";
 
-import { BookmarkCheck, BookmarkMinus } from "lucide-react";
+import { Bookmark, BookmarkMinus } from "lucide-react";
 
 interface BookmarkButtonProps {
   jobId: string;
@@ -68,17 +68,18 @@ const BookmarkButton = ({ jobId, initialState }: BookmarkButtonProps) => {
     <>
       <button onClick={() => mutate()} className="size-5">
         {data.isBookmarkedByUser ? (
-          <BookmarkMinus
+          <Bookmark
             className={cn(
               "size-5 hover:fill-background",
-              data.isBookmarkedByUser && "fill-yellow-300"
+              data.isBookmarkedByUser &&
+                "fill-yellow-500 text-yellow-500 hover:fill-yellow-500"
             )}
           />
         ) : (
-          <BookmarkCheck
+          <Bookmark
             className={cn(
-              "size-5 hover:fill-yellow-300",
-              data.isBookmarkedByUser && "fill-yellow-300"
+              "size-5 hover:fill-yellow-500 hover:text-yellow-500",
+              data.isBookmarkedByUser && "bg-neutral-50"
             )}
           />
         )}
