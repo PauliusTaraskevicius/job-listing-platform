@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
@@ -298,6 +298,62 @@ export const getUserJobsWithBookmarks = async () => {
     return bookmarks;
   } catch (error) {
     console.log("[GET_USER_JOBS_WITH_BOOKMARKS]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
+
+export const search = async (name: string) => {
+  try {
+    // const q = req.nextUrl.searchParams.get("q") || "";
+
+    const searchQuery = name.split(" ").join(" & ");
+
+    const searchData = await db.job.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              search: name,
+            },
+          },
+          {
+            description: {
+              search: name,
+            },
+          },
+          {
+            company: {
+              search: name,
+            },
+          },
+          {
+            category: {
+              title: {
+                search: name,
+              },
+            },
+          },
+          {
+            city: {
+              cityTitle: {
+                search: name,
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        category: true,
+        city: true,
+        bookmarks: true,
+      },
+    });
+
+    return searchData;
+  } catch (error) {
+    console.log("[SEARCH]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

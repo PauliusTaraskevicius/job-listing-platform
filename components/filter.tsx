@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { getJobs } from "@/actions/jobs";
-import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, SearchIcon } from "lucide-react";
 import { Category, City } from "@prisma/client";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PaginationSection } from "./pagination-section";
+import { useRouter } from "next/navigation";
+import { Input } from "./ui/input";
 
 type Props = {
   categoriesData: Category[];
@@ -35,6 +37,8 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
 
   const [valueCategory, setValueCategory] = useState<string>("");
   const [valueCity, setValueCity] = useState<string>("");
+
+  const router = useRouter();
 
   const { data: jobsData, isLoading: loadingJobs } = useQuery({
     queryKey: ["jobs"],
@@ -57,6 +61,14 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
   );
 
   const isLoading = loadingJobs;
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const q = (form.q as HTMLInputElement).value.trim();
+    if (!q) return;
+    router.push(`/paieska?q=${encodeURIComponent(q)}`);
+  };
 
   if (isLoading) {
     return <Loader2 className="size-6 animate-spin" />;
@@ -164,6 +176,17 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
             </Command>
           </PopoverContent>
         </Popover>
+        <form
+          onSubmit={handleSubmit}
+          method="GET"
+          action="/search"
+          className="w-full"
+        >
+          <div className="relative">
+            <Input name="q" placeholder="Paieška" />
+            <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform text-muted-foreground" />
+          </div>
+        </form>
       </div>
 
       <PaginationSection
