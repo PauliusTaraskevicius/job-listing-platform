@@ -4,4 +4,4 @@
 - text search fieldas salia filtru, su query-string or w/e
 - pataisyti tipus
 - dont show bookmark button to the owner of the job listing
-- search padaryti
+- search cards with paginations
