@@ -15,12 +15,13 @@ import {
 import { Jobs } from "./jobs/jobs";
 import { Skeleton } from "./ui/skeleton";
 import { JobProps } from "@/lib/types";
-import { Category, City } from "@prisma/client";
+import { Bookmark, Category, City } from "@prisma/client";
 
 type Props = {
   jobsData: JobProps[] & {
     category: Category;
     city: City;
+    bookmark: Bookmark
   }
   itemsPerPageNumber: number;
 };
@@ -33,8 +34,8 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
 
   const lastItemIndex = currentPage * itemsPerPageNumber;
   const firstItemIndex = lastItemIndex - itemsPerPageNumber;
-  const currentItems = data.slice(firstItemIndex, lastItemIndex);
-  const totalItems = data.length;
+  const currentItems = data?.slice(firstItemIndex, lastItemIndex);
+  const totalItems = data?.length;
 
   let pages = [];
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPageNumber); i++) {

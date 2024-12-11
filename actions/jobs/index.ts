@@ -308,37 +308,37 @@ export const search = async (name: string) => {
   try {
     // const q = req.nextUrl.searchParams.get("q") || "";
 
-    const searchQuery = name.split(" ").join(" & ");
+    const searchQuery = name.split(" ").join(" & ")
 
     const searchData = await db.job.findMany({
       where: {
         OR: [
           {
             title: {
-              search: name,
+              search: searchQuery,
             },
           },
           {
             description: {
-              search: name,
+              search: searchQuery,
             },
           },
           {
             company: {
-              search: name,
+              search: searchQuery,
             },
           },
           {
             category: {
               title: {
-                search: name,
+                search: searchQuery,
               },
             },
           },
           {
             city: {
               cityTitle: {
-                search: name,
+                search: searchQuery,
               },
             },
           },

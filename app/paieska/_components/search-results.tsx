@@ -1,6 +1,7 @@
 "use client";
 
 import { search } from "@/actions/jobs";
+import { PaginationSection } from "@/components/pagination-section";
 import { useQuery } from "@tanstack/react-query";
 
 type SearchResultsProps = {
@@ -15,13 +16,7 @@ const SearchResults = ({ query }: SearchResultsProps) => {
 
   return (
     <div>
-      {data?.map((item) => (
-        <div key={item.id}>
-          <p>PAIESKA:</p>
-          {item.title}
-
-        </div>
-      ))}
+      <PaginationSection itemsPerPageNumber={20} jobsData={data} />
     </div>
   );
 };

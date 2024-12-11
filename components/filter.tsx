@@ -1,9 +1,16 @@
 "use client";
-import { useState } from "react";
 
+import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getJobs } from "@/actions/jobs";
-import { Check, ChevronsUpDown, Loader2, SearchIcon } from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  Loader2,
+  SearchIcon,
+  X,
+  XIcon,
+} from "lucide-react";
 import { Category, City } from "@prisma/client";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +44,18 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
 
   const [valueCategory, setValueCategory] = useState<string>("");
   const [valueCity, setValueCity] = useState<string>("");
+
+  const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleClear = () => {
+    setValue("");
+    inputRef.current?.blur();
+  };
 
   const router = useRouter();
 
@@ -180,11 +199,38 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
           onSubmit={handleSubmit}
           method="GET"
           action="/search"
-          className="w-full"
+          className="w-1/2"
         >
           <div className="relative">
-            <Input name="q" placeholder="Paieška" />
-            <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform text-muted-foreground" />
+            <Input
+              value={value}
+              onChange={handleChange}
+              ref={inputRef}
+              name="q"
+              placeholder="Paieška"
+              className="px-14"
+            />
+            <Button
+              type="submit"
+              variant="ghost"
+              size="icon"
+              className="absolute left-3 top-1/2 size-5 -translate-y-1/2 transform"
+            >
+              <SearchIcon className=" text-muted-foreground" />
+            </Button>
+            {value && (
+              <>
+                <Button
+                  onClick={handleClear}
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform"
+                >
+                  <XIcon className=" text-muted-foreground" />
+                </Button>
+              </>
+            )}
           </div>
         </form>
       </div>
