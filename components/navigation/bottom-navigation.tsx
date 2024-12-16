@@ -5,9 +5,9 @@ import Link from "next/link";
 import {
   File,
   FileCheck,
-  House,
   Settings,
   BriefcaseBusiness,
+  User,
 } from "lucide-react";
 
 import {
@@ -29,8 +29,8 @@ const navigationLinks = [
   },
   {
     label: "Profilis",
-    href: "/profilis",
-    icon: <House />,
+    href: "/profilis/user-profile",
+    icon: <User />,
   },
   {
     label: "Mano skelbimai",

@@ -2,14 +2,12 @@
 import Link from "next/link";
 
 import { useMedia } from "react-use";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { UserButton, UserProfile } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
 
-import { BriefcaseBusiness, Loader2, MonitorCog } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 import { MobileNavigation } from "./mobile-navigation";
-
-import { useAuth } from "@clerk/nextjs";
 
 import {
   Tooltip,
@@ -20,9 +18,6 @@ import {
 
 export const Navigation = () => {
   const isMobile = useMedia("(max-width: 1024px)", false);
-
-  const { isLoaded } = useAuth();
-  const {isLoaded: loaded} = useUser()
 
   if (isMobile) {
     return <MobileNavigation />;
@@ -36,38 +31,21 @@ export const Navigation = () => {
       </Link>
 
       <div className="flex justify-center items-center space-x-4">
-        <div className="flex items-center space-x-4">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                {" "}
-                {!loaded && <Loader2 className="size-6 animate-spin"/>}
-                <UserButton
-                  appearance={{ elements: { avatarBox: "size-8" } }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Mano profilis</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          {isLoaded && (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  {" "}
-                  <Link href="/profilis">
-                    <MonitorCog className="size-7" />
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Skelbimų valdymas</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {" "}
+              <UserButton
+                appearance={{ elements: { avatarBox: "size-9" } }}
+                userProfileUrl="/profilis/user-profile"
+                userProfileMode="navigation"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Mano profilis</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <Link href="/hiring">
           <Button

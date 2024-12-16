@@ -65,6 +65,7 @@ export const getJobs = async () => {
         category: true,
         city: true,
         bookmarks: true,
+        author: true,
       },
     });
 
@@ -308,7 +309,7 @@ export const search = async (name: string) => {
   try {
     // const q = req.nextUrl.searchParams.get("q") || "";
 
-    const searchQuery = name.split(" ").join(" & ")
+    const searchQuery = name.split(" ").join(" & ");
 
     const searchData = await db.job.findMany({
       where: {
@@ -348,6 +349,7 @@ export const search = async (name: string) => {
         category: true,
         city: true,
         bookmarks: true,
+        author: true,
       },
     });
 

@@ -21,8 +21,8 @@ type Props = {
   jobsData: JobProps[] & {
     category: Category;
     city: City;
-    bookmark: Bookmark
-  }
+    bookmark: Bookmark;
+  };
   itemsPerPageNumber: number;
 };
 
@@ -57,6 +57,8 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
   if (!currentItems || !pages) {
     return (
       <>
+        <PaginationDataPlaceholder />
+        <PaginationDataPlaceholder />
         <PaginationDataPlaceholder />
         <PaginationDataPlaceholder />
         <PaginationDataPlaceholder />
@@ -112,7 +114,7 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
   );
 };
 
-const PaginationDataPlaceholder = () => {
+export const PaginationDataPlaceholder = () => {
   return (
     <div className="w-full p-2">
       <div className="flex flex-col">

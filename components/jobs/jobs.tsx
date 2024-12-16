@@ -34,6 +34,7 @@ export const Jobs = ({ job }: Props) => {
     remote,
     salary,
     paymentMethod,
+    author,
   } = job;
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -112,7 +113,7 @@ export const Jobs = ({ job }: Props) => {
                 </div>
               </div>
 
-              {isSignedIn && (
+              {isSignedIn && author.clerkUserId !== userId && (
                 <BookmarkButton
                   jobId={job.id}
                   initialState={{

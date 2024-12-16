@@ -11,6 +11,7 @@ import {
   House,
 
   Settings,
+  User,
 } from "lucide-react";
 
 import { Button } from "../ui/button";
@@ -21,9 +22,9 @@ import { ModeToggle } from "../mode-toggle";
 
 const navigationLinks = [
   {
-    label: "Pagrindinis",
-    href: "/profilis",
-    icon: <House />,
+    label: "Profilis",
+    href: "/profilis/user-profile",
+    icon: <User />,
   },
   {
     label: "Mano skelbimai",

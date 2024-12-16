@@ -9,7 +9,7 @@ type SearchResultsProps = {
 };
 
 const SearchResults = ({ query }: SearchResultsProps) => {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["jobs", "search", query],
     queryFn: async () => search(query),
   });

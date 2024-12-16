@@ -80,6 +80,13 @@ body,
   }
 }
 
+.cl-rootBox, .cl-cardBox {
+  width: 100%;
+  box-shadow: blur;
+
+}
+
+
 @layer base {
   * {
     @apply border-border;

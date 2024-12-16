@@ -29,7 +29,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PaginationSection } from "./pagination-section";
+import {
+  PaginationDataPlaceholder,
+  PaginationSection,
+} from "./pagination-section";
 import { useRouter } from "next/navigation";
 import { Input } from "./ui/input";
 
@@ -90,7 +93,15 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
   };
 
   if (isLoading) {
-    return <Loader2 className="size-6 animate-spin" />;
+    return (
+      <>
+        <PaginationDataPlaceholder />
+        <PaginationDataPlaceholder />
+        <PaginationDataPlaceholder />
+        <PaginationDataPlaceholder />
+        <PaginationDataPlaceholder />
+      </>
+    );
   }
 
   return (
