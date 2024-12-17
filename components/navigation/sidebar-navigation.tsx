@@ -9,7 +9,6 @@ import {
   File,
   FileCheck,
   House,
-
   Settings,
   User,
 } from "lucide-react";
@@ -18,7 +17,6 @@ import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "../mode-toggle";
-
 
 const navigationLinks = [
   {

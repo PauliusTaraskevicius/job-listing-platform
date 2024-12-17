@@ -16,6 +16,7 @@ import { Jobs } from "./jobs/jobs";
 import { Skeleton } from "./ui/skeleton";
 import { JobProps } from "@/lib/types";
 import { Bookmark, Category, City } from "@prisma/client";
+import Link from "next/link";
 
 type Props = {
   jobsData: JobProps[] & {
@@ -73,7 +74,9 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
           key={job.title}
           className="w-full py-1.5 cursor-pointer lg:px-0 px-1"
         >
-          <Jobs job={job} />
+          <Link href={`job/${job.id}`}>
+            <Jobs job={job} />
+          </Link>
         </div>
       ))}
       <Pagination className="py-2">

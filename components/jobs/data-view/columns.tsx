@@ -113,14 +113,14 @@ export const columns: ColumnDef<JobProps>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
                 <Link href={`/skelbimai/${salary.id}`}>
-                  <div className="flex items-center ">
+                  <div className="flex items-center cursor-pointer">
                     <Pencil className="size-4 mr-1" />
                     Redaguoti
                   </div>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
-                <div className="flex items-center">
+                <div className="flex items-center cursor-pointer">
                   <Trash className="size-4 mr-1" />
                   Ištrinti
                 </div>

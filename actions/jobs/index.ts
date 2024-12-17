@@ -95,6 +95,7 @@ export const getJobById = async (id: string) => {
             authorId: userId,
           },
         },
+        author: true,
       },
     });
 

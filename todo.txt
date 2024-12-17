@@ -1,4 +1,4 @@
 
 - tag modelis
 - pataisyti tipus
-- dont show bookmark button to the owner of the job listing
+

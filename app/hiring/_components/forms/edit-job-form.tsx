@@ -35,8 +35,6 @@ import { Category, City } from "@prisma/client";
 import RichTextField from "@/components/rich-text-field/rich-text-field";
 import { JobProps } from "@/lib/types";
 import { useUpdateJobListing } from "@/components/jobs/mutation";
-import { useUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 type Props = {
   job: JobProps | null;

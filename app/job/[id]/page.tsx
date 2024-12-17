@@ -1,15 +1,20 @@
+import { getJobById } from "@/actions/jobs";
+import { ListingDetails } from "../_components/listig-details";
+
+
 type Props = {
   params: {
-    id: number;
+    id: string;
   };
 };
 
-const JobId = async ({ params }: Props) => {
+const JobDetails = async ({ params }: Props) => {
+  const jobData = await getJobById(params.id);
   return (
     <div className="flex justify-center items-center h-full">
-      {params.id}
+      <ListingDetails job={jobData} />
     </div>
   );
 };
 
-export default JobId;
+export default JobDetails;
