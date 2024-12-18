@@ -1,4 +1,5 @@
 
 - tag modelis
 - pataisyti tipus
-
+- pakeisti visur icons from lucide react to react-icons
+- framer motions
