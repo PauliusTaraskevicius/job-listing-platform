@@ -4,14 +4,12 @@ import Link from "next/link";
 
 import { Separator } from "@/components/ui/separator";
 
-import {
-  BriefcaseBusiness,
-  File,
-  FileCheck,
-  House,
-  Settings,
-  User,
-} from "lucide-react";
+
+import { LuBriefcaseBusiness } from "react-icons/lu";
+import { FiUser } from "react-icons/fi";
+import { FaRegFile } from "react-icons/fa";
+import { LuFileCheck } from "react-icons/lu";
+import { LuSettings } from "react-icons/lu";
 
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
@@ -22,22 +20,22 @@ const navigationLinks = [
   {
     label: "Profilis",
     href: "/profilis/user-profile",
-    icon: <User />,
+    icon: <FiUser className="size-6"/>,
   },
   {
     label: "Mano skelbimai",
     href: "/skelbimai",
-    icon: <File />,
+    icon: <FaRegFile className="size-6" />,
   },
   {
     label: "Išsaugoti skelbimai",
     href: "/issaugoti_skelbimai",
-    icon: <FileCheck />,
+    icon: <LuFileCheck className="size-6" />,
   },
   {
     label: "Nustatymai",
     href: "/nustatymai",
-    icon: <Settings />,
+    icon: <LuSettings className="size-6" />,
   },
 ];
 
@@ -48,7 +46,7 @@ export const SidebarNavigation = () => {
     <aside className="sticky left-0 hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80 rounded-2xl border border-muted-foreground/20 px-4">
       <div>
         <Link href="/" className="flex justify-center items-center p-4 gap-2">
-          <BriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
+          <LuBriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
           <span className="uppercase font-semibold text-lg">DarbasMan</span>
         </Link>
       </div>

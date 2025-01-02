@@ -2,11 +2,11 @@
 import Link from "next/link";
 
 import { useMedia } from "react-use";
-import { UserButton, UserProfile } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
 
-import { BriefcaseBusiness } from "lucide-react";
+import { LuBriefcaseBusiness } from "react-icons/lu";
 import { MobileNavigation } from "./mobile-navigation";
 
 import {
@@ -26,7 +26,7 @@ export const Navigation = () => {
   return (
     <div className="hidden lg:flex justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2 backdrop-blur-lg transition-all">
       <Link href="/" className="flex items-center gap-1 cursor-pointer">
-        <BriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
+        <LuBriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
         DarbasMan
       </Link>
 

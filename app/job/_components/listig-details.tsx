@@ -104,9 +104,11 @@ export const ListingDetails = ({ job }: ListingDetailsProps) => {
       <div className="py-3">
         <RichTextRenderer description={description} />
       </div>
+      <div className="p-4 lg:p-0">
       <Link href={applyUrl} >
         <Button className="w-full my-3">Aplikuoti</Button>
       </Link>
+      </div>
     </div>
   );
 };

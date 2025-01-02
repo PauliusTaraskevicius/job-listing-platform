@@ -2,13 +2,11 @@
 
 import Link from "next/link";
 
-import {
-  File,
-  FileCheck,
-  Settings,
-  BriefcaseBusiness,
-  User,
-} from "lucide-react";
+import { LuBriefcaseBusiness } from "react-icons/lu";
+import { FiUser } from "react-icons/fi";
+import { FaRegFile } from "react-icons/fa";
+import { LuFileCheck } from "react-icons/lu";
+import { LuSettings } from "react-icons/lu";
 
 import {
   Tooltip,
@@ -25,27 +23,27 @@ const navigationLinks = [
   {
     label: "Pagrindinis",
     href: "/",
-    icon: <BriefcaseBusiness />,
+    icon: <LuBriefcaseBusiness className="size-6" />,
   },
   {
     label: "Profilis",
     href: "/profilis/user-profile",
-    icon: <User />,
+    icon: <FiUser className="size-6"/>,
   },
   {
     label: "Mano skelbimai",
     href: "/skelbimai",
-    icon: <File />,
+    icon: <FaRegFile className="size-6" />,
   },
   {
     label: "Išsaugoti skelbimai",
     href: "/issaugoti_skelbimai",
-    icon: <FileCheck />,
+    icon: <LuFileCheck className="size-6" />,
   },
   {
     label: "Nustatymai",
     href: "/nustatymai",
-    icon: <Settings />,
+    icon: <LuSettings className="size-6" />,
   },
 ];
 
@@ -53,11 +51,11 @@ export const BottomNavigation = () => {
   const activePath = usePathname();
 
   return (
-    <div className="fixed flex justify-center items-center md:hidden bottom-0 left-0 w-full p-2 border border-muted-foreground/20 px-4 bg-white">
+    <div className="fixed flex justify-center items-center md:hidden bottom-0 left-0 w-full p-2 border border-muted-foreground/20 bg-white">
       {navigationLinks.map((link) => (
         <Button
           className={cn(
-            "flex justify-center gap-2 rounded-full bg-transparent hover:bg-primary transition text-primary hover:text-white hover:dark:text-black",
+            "flex justify-center px-6 bg-red-100 rounded-full bg-transparent hover:bg-primary transition text-primary hover:text-white hover:dark:text-black",
             activePath === link.href && "bg-primary text-white dark:text-black"
           )}
           key={link.href}

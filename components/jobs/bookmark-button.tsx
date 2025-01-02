@@ -10,7 +10,7 @@ import {
 import { useToast } from "../ui/use-toast";
 import { createBookmark, deleteBookmark } from "@/actions/jobs";
 
-import { Bookmark, BookmarkMinus } from "lucide-react";
+import { Bookmark } from "lucide-react";
 
 interface BookmarkButtonProps {
   jobId: string;

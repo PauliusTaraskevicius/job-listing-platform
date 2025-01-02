@@ -15,7 +15,11 @@ export const MobileNavigation = () => {
           size="sm"
           className="font-normal border-none"
         >
-          <UserButton appearance={{ elements: { avatarBox: "size-9" } }} />
+          <UserButton
+            appearance={{ elements: { avatarBox: "size-9" } }}
+            userProfileUrl="/profilis/user-profile"
+            userProfileMode="navigation"
+          />
         </Button>
       </div>
       <div className="flex space-x-2">
