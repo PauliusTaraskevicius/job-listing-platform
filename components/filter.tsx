@@ -3,14 +3,7 @@
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getJobs } from "@/actions/jobs";
-import {
-  Check,
-  ChevronsUpDown,
-  Loader2,
-  SearchIcon,
-  X,
-  XIcon,
-} from "lucide-react";
+import { Check, ChevronsUpDown, SearchIcon, X, XIcon } from "lucide-react";
 import { Category, City } from "@prisma/client";
 import { cn } from "@/lib/utils";
 

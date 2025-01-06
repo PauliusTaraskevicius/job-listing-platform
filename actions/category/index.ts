@@ -52,3 +52,27 @@ export const getCategories = async () => {
     });
   }
 };
+
+export const getCategoryBySlug = async (title: string) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+  try {
+    const category = await db.category.findUnique({
+      where: { title },
+      include: {
+        jobs: true,
+        creator: true,
+      },
+    });
+
+    return category;
+  } catch (error) {
+    console.log("[GET_CATEGORY_BY_ID]", error);
+    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
+      status: 500,
+    });
+  }
+};
