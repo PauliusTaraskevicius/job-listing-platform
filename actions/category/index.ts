@@ -63,14 +63,28 @@ export const getCategoryBySlug = async (title: string) => {
     const category = await db.category.findUnique({
       where: { title },
       include: {
-        jobs: true,
+        jobs: {
+          include: {
+            author: true,
+            bookmarks: {
+              where: {
+                authorId: userId,
+              },
+            },
+            category: true,
+            city: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
         creator: true,
       },
     });
 
     return category;
   } catch (error) {
-    console.log("[GET_CATEGORY_BY_ID]", error);
+    console.log("[GET_CATEGORY_BY_SLUG]", error);
     throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
       status: 500,
     });

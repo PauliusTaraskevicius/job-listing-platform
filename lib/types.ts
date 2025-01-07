@@ -1,6 +1,12 @@
+import {
+  Bookmark,
+  Category,
+  City,
+  Job,
+  PaymentMethod,
+  User,
+} from "@prisma/client";
 
-
-import { Bookmark, Category, City, Job, PaymentMethod, User } from "@prisma/client";
 
 export type JobProps = {
   id: string;
@@ -15,7 +21,7 @@ export type JobProps = {
   bookmarks: Bookmark[];
   category: Category;
   city: City;
-  author: User
+  author: User;
 };
 
 export interface PostsPage {
