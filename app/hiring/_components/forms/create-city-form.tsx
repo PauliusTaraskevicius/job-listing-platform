@@ -32,6 +32,7 @@ export const CreateCityForm = () => {
     resolver: zodResolver(createCitySchema),
     defaultValues: {
       cityTitle: "",
+      slug: "",
     },
   });
 
@@ -67,6 +68,19 @@ export const CreateCityForm = () => {
               <FormLabel>Miestas</FormLabel>
               <FormControl>
                 <Input placeholder="Miestas" {...field} disabled={isPending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <FormControl>
+                <Input placeholder="Slug" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -9,6 +9,5 @@ export const createCitySchema = z.object({
     .min(3, {
       message: "Miesto pavadinimas privalo būti bent 3 simbolių",
     }),
+  slug: z.string(),
 });
-
-

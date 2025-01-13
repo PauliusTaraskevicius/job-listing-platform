@@ -116,32 +116,33 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className=" p-0">
+          <PopoverContent className="p-0">
             <Command>
               <CommandInput placeholder="Kategorija" />
               <CommandEmpty>Kategorija nerasta.</CommandEmpty>
               <CommandGroup>
                 <CommandList>
-                  {categoriesData?.map((framework) => (
+                  {categoriesData?.map((category) => (
                     <CommandItem
-                      key={framework.title}
-                      value={framework.title}
+                      key={category.title}
+                      value={category.title}
                       onSelect={(currentValue) => {
                         setValueCategory(
                           currentValue === valueCategory ? "" : currentValue
                         );
                         setOpenCategory(false);
                       }}
+                      className="truncate"
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          valueCategory === framework.title
+                          valueCategory === category.title
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {framework.title}
+                      {category.title}
                     </CommandItem>
                   ))}
                 </CommandList>
@@ -160,7 +161,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
             >
               {valueCity
                 ? citiesData?.find(
-                    (framework) => framework.cityTitle === valueCity
+                    (city) => city.cityTitle === valueCity
                   )?.cityTitle
                 : "Miestas"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -172,10 +173,10 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
               <CommandEmpty>Miestas nerastas.</CommandEmpty>
               <CommandGroup>
                 <CommandList>
-                  {citiesData?.map((framework) => (
+                  {citiesData?.map((city) => (
                     <CommandItem
-                      key={framework.cityTitle}
-                      value={framework.cityTitle}
+                      key={city.cityTitle}
+                      value={city.cityTitle}
                       onSelect={(currentValue) => {
                         setValueCity(
                           currentValue === valueCity ? "" : currentValue
@@ -186,12 +187,12 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          valueCity === framework.cityTitle
+                          valueCity === city.cityTitle
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {framework.cityTitle}
+                      {city.cityTitle}
                     </CommandItem>
                   ))}
                 </CommandList>

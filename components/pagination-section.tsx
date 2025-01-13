@@ -72,47 +72,56 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
       {currentItems.map((job) => (
         <div
           key={job.title}
-          className="w-full py-1.5 cursor-pointer lg:px-0 px-1"
+          className="w-full py-1.5 cursor-pointer lg:px-0 px-1 "
         >
           <Link href={`job/${job.id}`}>
             <Jobs job={job} />
           </Link>
         </div>
       ))}
-      <Pagination className="py-2">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              className="cursor-pointer"
-              onClick={() => handlePrevPage()}
-            />
-          </PaginationItem>
-          {pages.map((page, i) => (
-            <PaginationItem
-              key={i}
-              className={
-                currentPage === page ? "bg-neutral-200 rounded-md" : ""
-              }
-            >
-              <PaginationLink
-                className="cursor-pointer dark:text-black"
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </PaginationLink>
+
+      {currentItems.length === 0 && (
+        <div className="flex justify-center items-center w-full py-1.5 cursor-pointer lg:px-0 px-1">
+          <h1>Skelbimų nerasta.</h1>
+        </div>
+      )}
+
+      {currentItems.length >= 5 && (
+        <Pagination className="py-2">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                className="cursor-pointer"
+                onClick={() => handlePrevPage()}
+              />
             </PaginationItem>
-          ))}
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              className="cursor-pointer"
-              onClick={() => handleNextPage()}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            {pages.map((page, i) => (
+              <PaginationItem
+                key={i}
+                className={
+                  currentPage === page ? "bg-neutral-200 rounded-md" : ""
+                }
+              >
+                <PaginationLink
+                  className="cursor-pointer dark:text-black"
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                className="cursor-pointer"
+                onClick={() => handleNextPage()}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </>
   );
 };

@@ -24,7 +24,6 @@ import { useMutation } from "@tanstack/react-query";
 import { createCategory } from "@/actions/category";
 import { useToast } from "@/components/ui/use-toast";
 
-
 export const CreateCategoryForm = () => {
   const { toast } = useToast();
   const route = useRouter();
@@ -33,6 +32,7 @@ export const CreateCategoryForm = () => {
     resolver: zodResolver(createCategorySchema),
     defaultValues: {
       title: "",
+      slug: "",
     },
   });
 
@@ -72,6 +72,19 @@ export const CreateCategoryForm = () => {
                   {...field}
                   disabled={isPending}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Slug</FormLabel>
+              <FormControl>
+                <Input placeholder="Slug" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>

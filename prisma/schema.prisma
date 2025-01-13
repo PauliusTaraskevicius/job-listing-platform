@@ -48,6 +48,7 @@ model User {
 model Category {
   id    String @id @default(uuid())
   title String @unique @db.Text
+  slug  String @unique @db.Text
 
   jobs Job[] @relation("CategoryToJob")
 
@@ -63,6 +64,7 @@ model Category {
 model City {
   id        String @id @default(uuid())
   cityTitle String @unique @db.Text
+  slug      String @unique @db.Text
   jobs      Job[]  @relation("CityToJob")
 
   creatorId String

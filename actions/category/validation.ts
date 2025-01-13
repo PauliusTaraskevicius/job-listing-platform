@@ -8,7 +8,6 @@ export const createCategorySchema = z.object({
     })
     .min(3, {
       message: "Kategorija privalo būti bent 3 simbolių",
-    })
+    }),
+  slug: z.string(),
 });
-
-

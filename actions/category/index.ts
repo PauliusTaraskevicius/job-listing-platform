@@ -14,12 +14,13 @@ export const createCategory = async (data: categoryType) => {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
   }
 
-  const { title } = data;
+  const { title, slug } = data;
 
   try {
     const category: Category = await db.category.create({
       data: {
         title,
+        slug,
         creatorId: userId,
       },
     });
@@ -53,7 +54,7 @@ export const getCategories = async () => {
   }
 };
 
-export const getCategoryBySlug = async (title: string) => {
+export const getCategoryBySlug = async (slug: string) => {
   const { userId } = auth();
 
   if (!userId) {
@@ -61,7 +62,7 @@ export const getCategoryBySlug = async (title: string) => {
   }
   try {
     const category = await db.category.findUnique({
-      where: { title },
+      where: { slug },
       include: {
         jobs: {
           include: {
