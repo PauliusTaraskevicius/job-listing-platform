@@ -1,10 +1,8 @@
 
-
-
 import { getCityBySlug } from "@/actions/city";
 import { Banner } from "@/app/(group)/_components/banner";
 
-import { PaginationSection } from "@/components/pagination-section";
+import { CityPaginationSection } from "../_components/city-pagination-section";
 
 
 type CityPageProps = {
@@ -21,7 +19,7 @@ const CityPage = async ({ params }: CityPageProps) => {
   return (
     <div>
       <Banner title={city?.cityTitle}/>
-      <PaginationSection itemsPerPageNumber={10} jobsData={city?.jobs} />
+      <CityPaginationSection itemsPerPageNumber={10} jobsData={city?.jobs} />
     </div>
   );
 };

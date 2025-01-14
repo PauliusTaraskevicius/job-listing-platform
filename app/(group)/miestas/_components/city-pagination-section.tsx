@@ -12,11 +12,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { Jobs } from "./jobs/jobs";
-import { Skeleton } from "./ui/skeleton";
+
+
 import { JobProps } from "@/lib/types";
 import { Bookmark, Category, City } from "@prisma/client";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Jobs } from "@/components/jobs/jobs";
 
 type Props = {
   jobsData: JobProps[] & {
@@ -27,7 +29,7 @@ type Props = {
   itemsPerPageNumber: number;
 };
 
-export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
+export const CityPaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   // const [itemsPerPage, setItemsPerPage] = useState<number>(20);
 
@@ -74,7 +76,7 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
           key={job.title}
           className="w-full py-1.5 cursor-pointer lg:px-0 px-1 "
         >
-          <Link href={`/darbas/${job.id}`}>
+          <Link href={`/miestas/${job.city.cityTitle}/${job.id}`}>
             <Jobs job={job} />
           </Link>
         </div>

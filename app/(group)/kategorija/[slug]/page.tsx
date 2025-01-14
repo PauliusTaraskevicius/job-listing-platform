@@ -2,6 +2,7 @@ import { getCategoryBySlug } from "@/actions/category";
 
 import { PaginationSection } from "@/components/pagination-section";
 import { Banner } from "../../_components/banner";
+import { CategoryPaginationSection } from "../_components/category-pagination-section";
 
 type CategoryPageProps = {
   params: {
@@ -17,7 +18,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   return (
     <div>
       <Banner title={category?.title.replace(/\//g, " ")} />
-      <PaginationSection itemsPerPageNumber={10} jobsData={category?.jobs} />
+      <CategoryPaginationSection itemsPerPageNumber={10} jobsData={category?.jobs} />
     </div>
   );
 };
