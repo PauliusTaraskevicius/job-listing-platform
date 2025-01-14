@@ -3,3 +3,5 @@
 - pataisyti tipus
 - framer motions
 - footer with categories
+- sutvarkyti navigation bg-color
+- paieskos fieldas homepage overtopina navigacija z-?

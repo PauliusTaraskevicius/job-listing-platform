@@ -1,17 +1,9 @@
 "use client";
 
 import { getUserJobsWithBookmarks } from "@/actions/jobs";
-import {
-  QueryKey,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 const Bookmarks = () => {
-  const queryClient = useQueryClient();
-
   const { data, status, isLoading } = useQuery({
     queryKey: ["job-feed", "bookmarks"],
     queryFn: () => getUserJobsWithBookmarks(),

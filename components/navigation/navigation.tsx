@@ -24,7 +24,7 @@ export const Navigation = () => {
   }
 
   return (
-    <div className="hidden lg:flex justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2 backdrop-blur-lg transition-all">
+    <div className="hidden lg:flex justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2 bg-white transition-all">
       <Link href="/" className="flex items-center gap-1 cursor-pointer">
         <LuBriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
         DarbasMan
