@@ -1,6 +1,5 @@
 import { getCategoryBySlug } from "@/actions/category";
 
-import { PaginationSection } from "@/components/pagination-section";
 import { Banner } from "../../_components/banner";
 import { CategoryPaginationSection } from "../_components/category-pagination-section";
 

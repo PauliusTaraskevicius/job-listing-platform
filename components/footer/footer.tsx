@@ -5,8 +5,10 @@ import { Categories } from "./categories";
 import { Cities } from "./cities";
 
 import { FaXTwitter } from "react-icons/fa6";
-import { FaFacebook, FaArrowLeft, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { getCategories } from "@/actions/category";
+import { getCities } from "@/actions/city";
 
 const socials = [
   {
@@ -24,8 +26,10 @@ const socials = [
 ];
 
 const Footer = async () => {
+  const categories = await getCategories();
+  const cities = await getCities();
 
-  const currentDate = new Date().getFullYear()
+  const currentDate = new Date().getFullYear();
 
   return (
     <footer className="bottom-0 flex w-full flex-col justify-between gap-8 border-t-2 px-2 py-6 sm:px-4 sm:py-12 md:flex-row lg:px-36">
@@ -44,7 +48,6 @@ const Footer = async () => {
           <Link
             href="/hiring"
             className="text-sm tracking-tight text-muted-foreground"
-
           >
             Talpinti skelbimą
           </Link>
@@ -78,12 +81,12 @@ const Footer = async () => {
       <div className="flex gap-10">
         <div className="flex flex-col space-y-3">
           <h6 className="text-lg">Kategorijos</h6>
-          <Categories />
+          <Categories categories={categories.data} />
         </div>
 
         <div className="flex flex-col space-y-3">
           <h6 className="text-lg">Miestai</h6>
-          <Cities />
+          <Cities cities={cities.data} />
         </div>
       </div>
     </footer>

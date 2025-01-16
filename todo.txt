@@ -1,7 +1,5 @@
 
 - tag modelis
-- pataisyti tipus
 - framer motions
-- footer with categories
-- sutvarkyti navigation bg-color
 - paieskos fieldas homepage overtopina navigacija z-?
+- client side jei reik real times updates (tanstack-query).Paprastai naudot server components.Isimt is footer react-query

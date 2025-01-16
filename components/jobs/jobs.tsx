@@ -17,12 +17,17 @@ import {
 } from "@/components/ui/tooltip";
 
 import { Badge } from "@/components/ui/badge";
-
-import { JobProps } from "@/lib/types";
 import BookmarkButton from "./bookmark-button";
+import { Bookmark, Category, City, Job, User } from "@prisma/client";
+import { JobProps } from "@/lib/types";
 
 type Props = {
-  job: JobProps;
+  job: JobProps & {
+    bookmarks: Bookmark[];
+    category: Category;
+    city: City;
+    author: User
+  }
 };
 
 export const Jobs = ({ job }: Props) => {

@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { Category, City, Job, User } from "@prisma/client";
+import { Bookmark, Category, City, User } from "@prisma/client";
 
 import { format } from "date-fns";
 
@@ -23,13 +23,15 @@ import {
 
 import RichTextRenderer from "@/components/rich-text-field/rich-text-renderer";
 import { Button } from "@/components/ui/button";
+import { JobProps } from "@/lib/types";
 
 type ListingDetailsProps = {
-  job: Job & {
-    category: Category;
-    city: City;
-    author: User;
-  };
+  job: JobProps & {
+    bookmarks: Bookmark[];
+    category: Category
+    city: City
+    author: User
+  } | null
 };
 
 const socials = [
@@ -49,7 +51,7 @@ const socials = [
 
 export const ListingDetails = ({ job }: ListingDetailsProps) => {
   const { title, createdAt, company, city, description, remote, applyUrl } =
-    job;
+    job!;
 
   const route = usePathname();
   const router = useRouter();
@@ -80,7 +82,7 @@ export const ListingDetails = ({ job }: ListingDetailsProps) => {
         </span>
         <h1 className="text-3xl md:text-5xl font-bold">{title}</h1>
         <p>
-          {company} ⋅ {city.cityTitle}
+          {company} ⋅ {city.cityTitle} {}
         </p>
         <div className="flex items-center space-x-3">
           <p className="text-muted-foreground">Pasidalinkite: </p>

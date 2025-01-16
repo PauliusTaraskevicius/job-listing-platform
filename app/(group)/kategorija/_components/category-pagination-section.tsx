@@ -19,11 +19,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Jobs } from "@/components/jobs/jobs";
 
 type Props = {
-  jobsData: JobProps[] & {
-    category: Category;
-    city: City;
-    bookmark: Bookmark;
-  };
+  jobsData: JobProps[] | undefined
   itemsPerPageNumber: number;
 };
 
@@ -42,7 +38,7 @@ export const CategoryPaginationSection = ({
   const totalItems = data?.length;
 
   let pages = [];
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPageNumber); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems! / itemsPerPageNumber); i++) {
     pages.push(i);
   }
 

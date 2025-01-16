@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import {
   Pagination,
@@ -15,15 +16,9 @@ import {
 import { Jobs } from "./jobs/jobs";
 import { Skeleton } from "./ui/skeleton";
 import { JobProps } from "@/lib/types";
-import { Bookmark, Category, City } from "@prisma/client";
-import Link from "next/link";
 
 type Props = {
-  jobsData: JobProps[] & {
-    category: Category;
-    city: City;
-    bookmark: Bookmark;
-  };
+  jobsData: JobProps[] | undefined
   itemsPerPageNumber: number;
 };
 
@@ -39,7 +34,7 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
   const totalItems = data?.length;
 
   let pages = [];
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPageNumber); i++) {
+  for (let i = 1; i <= Math.ceil(totalItems! / itemsPerPageNumber); i++) {
     pages.push(i);
   }
 
@@ -86,7 +81,7 @@ export const PaginationSection = ({ jobsData, itemsPerPageNumber }: Props) => {
         </div>
       )}
 
-      {currentItems.length >= 5 && (
+      {currentItems.length >= 1 && (
         <Pagination className="py-2">
           <PaginationContent>
             <PaginationItem>

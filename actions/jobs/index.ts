@@ -3,12 +3,14 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
-import { BookmarkInfo, BookmarkProps } from "@/lib/types";
+import { BookmarkInfo } from "@/lib/types";
 import { revalidatePath } from "next/cache";
+
+
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
 

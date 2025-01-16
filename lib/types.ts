@@ -19,9 +19,10 @@ export type JobProps = {
   premium?: boolean | null;
   remote?: boolean | null;
   bookmarks: Bookmark[];
-  category: Category;
+  category: Category
   city: City;
-  author: User;
+  author: User
+  createdAt: Date
 };
 
 export interface PostsPage {
