@@ -6,12 +6,13 @@ import { CityPaginationSection } from "../_components/city-pagination-section";
 
 
 type CityPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
-const CityPage = async ({ params }: CityPageProps) => {
+const CityPage = async (props: CityPageProps) => {
+  const params = await props.params;
   const { slug } = params;
 
   const city = await getCityBySlug(slug);

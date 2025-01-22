@@ -4,10 +4,16 @@ import { getCategories } from "@/actions/category";
 import { EditJobForm } from "@/app/hiring/_components/forms/edit-job-form";
 
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function Page({ params: { id } }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const categories = await getCategories();
   const cities = await getCities();
   const job = await getJobById(id);

@@ -2,12 +2,13 @@ import { getJobById } from "@/actions/jobs";
 import { ListingDetails } from "@/app/darbas/_components/listig-details";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-const CityJobPage = async ({ params }: Props) => {
+const CityJobPage = async (props: Props) => {
+  const params = await props.params;
   const jobData = await getJobById(params.id);
 
   return (

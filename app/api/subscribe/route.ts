@@ -40,7 +40,8 @@ export async function POST(req: Request, res: NextResponse) {
       );
     }
 
-    return NextResponse.json(res);
+    return NextResponse.json(/* @next-codemod-error 'res' is passed as an argument. Any asynchronous properties of 'props' must be awaited when accessed. */
+    res);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(

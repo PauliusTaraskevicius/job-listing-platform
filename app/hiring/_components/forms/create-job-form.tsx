@@ -25,7 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
 import { Input } from "@/components/ui/input";
 import { Banner } from "../banner";
 
@@ -309,7 +308,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             )}
           />
           <Button disabled={isPending} type="submit">
-            Submit
+            Talpinti skelbimą
           </Button>
         </form>
       </Form>

@@ -1,5 +1,4 @@
 
-- tag modelis
 - framer motions
-- paieskos fieldas homepage overtopina navigacija z-?
-- client side jei reik real times updates (tanstack-query).Paprastai naudot server components.Isimt is footer react-query
+- user subscription model with limits
+- atskira subscription sukurt

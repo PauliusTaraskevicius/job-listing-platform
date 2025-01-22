@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import SearchResults from "./_components/search-results";
 
 type Searchprops = {
-  searchParams: { q: string };
+  searchParams: Promise<{ q: string }>;
 };
 
 export function generateMetaData({
@@ -13,7 +13,13 @@ export function generateMetaData({
   };
 }
 
-export default async function Search({ searchParams: { q } }: Searchprops) {
+export default async function Search(props: Searchprops) {
+  const searchParams = await props.searchParams;
+
+  const {
+    q
+  } = searchParams;
+
   return (
     <main className="flex w-full min-w-0 gap-5">
       <div className="w-full min-w-0 space-y-5">

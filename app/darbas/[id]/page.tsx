@@ -3,12 +3,13 @@ import { ListingDetails } from "../_components/listig-details";
 
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-const JobDetails = async ({ params }: Props) => {
+const JobDetails = async (props: Props) => {
+  const params = await props.params;
   const jobData = await getJobById(params.id);
   return (
     <div className="flex justify-center items-center h-full">

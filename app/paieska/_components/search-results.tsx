@@ -16,7 +16,7 @@ const SearchResults = ({ query }: SearchResultsProps) => {
 
   return (
     <div>
-      <PaginationSection itemsPerPageNumber={20} jobsData={data} />
+      <PaginationSection itemsPerPageNumber={10} jobsData={data} />
     </div>
   );
 };
