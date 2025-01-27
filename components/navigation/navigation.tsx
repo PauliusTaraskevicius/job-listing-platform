@@ -15,6 +15,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { GetSubscriptionButton } from "../premium/get-subscription-button";
 
 export const Navigation = () => {
   const isMobile = useMedia("(max-width: 1024px)", false);
@@ -63,14 +64,7 @@ export const Navigation = () => {
             </Tooltip>
           </TooltipProvider>
         </Link>
-        <Link href="/prenumeratos">
-          <Button
-            size="xl"
-            className="rounded-2xl text-base bg-neutral-950 hover:bg-neutral-950/90 dark:bg-white"
-          >
-            Prenumeratos
-          </Button>
-        </Link>
+        <GetSubscriptionButton canCreate={false} />
       </div>
     </div>
   );

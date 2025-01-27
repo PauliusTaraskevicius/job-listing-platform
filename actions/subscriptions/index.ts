@@ -13,8 +13,8 @@ export async function createCheckoutSession(priceId: string) {
   const session = await stripe.checkout.sessions.create({
     line_items: [{ price: priceId, quantity: 1 }],
     mode: "subscription",
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/billing/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/billing`,
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/nustatymai/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     customer_email: user.emailAddresses[0].emailAddress,
     subscription_data: {
       metadata: {
@@ -23,7 +23,7 @@ export async function createCheckoutSession(priceId: string) {
     },
     custom_text: {
       terms_of_service_acceptance: {
-        message: `I have read DarbasMan sąlygas ir [privatumo politikas](${process.env.NEXT_PUBLIC_BASE_URL}/privatumo_politika)`,
+        message: `Perskaičiau DarbasMan sąlygas ir [privatumo politikas](${process.env.NEXT_PUBLIC_BASE_URL}/privatumo_politika)`,
       },
     },
     consent_collection: {
