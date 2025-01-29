@@ -226,6 +226,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
                 <FormLabel>Darbo vietos aprašymas</FormLabel>
                 <FormControl>
                   <RichTextField
+                    className="min-h-[24rem]"
                     description={field.value}
                     onChange={field.onChange}
                   />
@@ -307,8 +308,8 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
               </FormItem>
             )}
           />
-          <Button disabled={isPending} type="submit">
-            Talpinti skelbimą
+          <Button disabled={isPending} type="submit" className="w-full">
+            Talpinti skelbimą - 70&euro;
           </Button>
         </form>
       </Form>

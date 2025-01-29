@@ -11,7 +11,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/footer/footer";
-import PremiumModal from "@/components/premium/premium-modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +38,7 @@ export default function RootLayout({
               <Wrapper>
                 <Navigation />
                 <main>{children}</main>
-                <PremiumModal />
+
                 <Toaster />
               </Wrapper>
               <Footer />

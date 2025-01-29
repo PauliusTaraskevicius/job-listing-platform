@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 
 import { useMedia } from "react-use";
@@ -15,7 +16,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { GetSubscriptionButton } from "../premium/get-subscription-button";
 
 export const Navigation = () => {
   const isMobile = useMedia("(max-width: 1024px)", false);
@@ -64,7 +64,6 @@ export const Navigation = () => {
             </Tooltip>
           </TooltipProvider>
         </Link>
-        <GetSubscriptionButton canCreate={false} />
       </div>
     </div>
   );

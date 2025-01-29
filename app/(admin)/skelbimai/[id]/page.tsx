@@ -1,7 +1,7 @@
 import { getCities } from "@/actions/city";
 import { getJobById } from "@/actions/jobs";
 import { getCategories } from "@/actions/category";
-import { EditJobForm } from "@/app/hiring/_components/forms/edit-job-form";
+import { EditJobForm } from "@/app/(landing)/hiring/_components/forms/edit-job-form";
 
 type PageProps = {
   params: Promise<{ id: string }>;

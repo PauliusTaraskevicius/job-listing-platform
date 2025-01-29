@@ -1,5 +1,5 @@
 import { getJobById } from "@/actions/jobs";
-import { ListingDetails } from "@/app/darbas/_components/listig-details";
+import { ListingDetails } from "@/app/(landing)/darbas/_components/listig-details";
 
 type Props = {
   params: Promise<{

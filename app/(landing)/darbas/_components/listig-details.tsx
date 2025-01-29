@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { Bookmark, Category, City, User } from "@prisma/client";
+import { Bookmark, Category, City, Job, User } from "@prisma/client";
 
 import { format } from "date-fns";
 
@@ -23,15 +23,14 @@ import {
 
 import RichTextRenderer from "@/components/rich-text-field/rich-text-renderer";
 import { Button } from "@/components/ui/button";
-import { JobProps } from "@/lib/types";
 
 type ListingDetailsProps = {
-  job: JobProps & {
-    bookmarks: Bookmark[];
-    category: Category
-    city: City
-    author: User
-  } | null
+  job:
+    | (Job & {
+        category: Category;
+        city: City;
+      })
+    | null;
 };
 
 const socials = [

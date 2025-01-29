@@ -10,7 +10,6 @@ import { createJobSchema } from "./validation";
 import { BookmarkInfo } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 
-
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
 
@@ -81,22 +80,12 @@ export const getJobs = async () => {
 };
 
 export const getJobById = async (id: string) => {
-  const { userId } = auth();
-
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
   try {
     const job = await db.job.findUnique({
       where: { id },
       include: {
         category: true,
         city: true,
-        bookmarks: {
-          where: {
-            authorId: userId,
-          },
-        },
         author: true,
       },
     });
