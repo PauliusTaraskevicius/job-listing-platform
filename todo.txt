@@ -1,4 +1,3 @@
 
 - framer motions
-- user subscription model with limits
-- atskira subscription sukurt
+- stripe integration

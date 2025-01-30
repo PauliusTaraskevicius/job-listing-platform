@@ -46,6 +46,7 @@ export const createJob = async (data: jobType) => {
         authorId: userId,
       },
     });
+    
 
     return { data: job };
   } catch (error) {
