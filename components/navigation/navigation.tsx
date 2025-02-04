@@ -16,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import CreateListingButton from "../PREMIUM/create-listing-button";
 
 export const Navigation = () => {
   const isMobile = useMedia("(max-width: 1024px)", false);
@@ -47,7 +48,7 @@ export const Navigation = () => {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <Link href="/hiring">
+        {/* <Link href="/hiring">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -63,7 +64,8 @@ export const Navigation = () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </Link>
+        </Link> */}
+        <CreateListingButton canCreate={false} />
       </div>
     </div>
   );
