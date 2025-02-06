@@ -1,9 +1,8 @@
 import { SubscriptionLevel } from "./subscriptions";
 
-
-export function canCreateResume(
+export function canCreateJobListing(
   subscriptionLevel: SubscriptionLevel,
-  currentResumeCount: number
+  currentJobListingsCount: number
 ) {
   const maxResumeMap: Record<SubscriptionLevel, number> = {
     free: 1,
@@ -13,5 +12,5 @@ export function canCreateResume(
 
   const maxResumes = maxResumeMap[subscriptionLevel];
 
-  return currentResumeCount < maxResumes;
+  return currentJobListingsCount < maxResumes;
 }

@@ -9,12 +9,28 @@ import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
 import { BookmarkInfo } from "@/lib/types";
 import { revalidatePath } from "next/cache";
+import { getUserSubscriptionLevel } from "@/components/PREMIUM/subscriptions";
+import { canCreateJobListing } from "@/components/PREMIUM/permissions";
 
 export const createJob = async (data: jobType) => {
   const { userId } = auth();
 
   if (!userId) {
     throw new NextResponse("Vartotojas nerastas", { status: 401 });
+  }
+
+  const subscriptionLevel = await getUserSubscriptionLevel(userId);
+
+  const listingCount = await db.job.count({
+    where: {
+      authorId: userId,
+    },
+  });
+
+  if (!canCreateJobListing(subscriptionLevel, listingCount)) {
+    throw new Error(
+      "Maximum job listings count reached for this subscription level"
+    );
   }
 
   const {
@@ -46,7 +62,6 @@ export const createJob = async (data: jobType) => {
         authorId: userId,
       },
     });
-    
 
     return { data: job };
   } catch (error) {
