@@ -85,7 +85,7 @@ export const Navigation = async () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {/* <Link href="/hiring">
+          <Link href="/hiring">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -101,7 +101,7 @@ export const Navigation = async () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </Link> */}
+        </Link>
           <CreateListingButton canCreate={canCreateJobListing(subscriptionLevel, totalCount)} />
         </div>
       </div>

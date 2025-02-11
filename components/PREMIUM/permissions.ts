@@ -5,7 +5,7 @@ export function canCreateJobListing(
   currentJobListingsCount: number
 ) {
   const maxResumeMap: Record<SubscriptionLevel, number> = {
-    free: 1,
+    free: 0,
     pro: 3,
     pro_plus: Infinity,
   };

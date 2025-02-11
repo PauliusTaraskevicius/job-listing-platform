@@ -20,7 +20,7 @@ export const createCategory = async (data: categoryType) => {
     const category: Category = await db.category.create({
       data: {
         title,
-        slug,
+        slug: slug.replace(/\//g, "_"),
         creatorId: userId,
       },
     });
