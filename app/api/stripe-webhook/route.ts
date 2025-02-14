@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import stripe from "@/lib/stripe";
 import { clerkClient } from "@clerk/nextjs/server";
 import { NextRequest } from "next/server";
@@ -17,7 +18,6 @@ export async function POST(req: NextRequest) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-
 
     console.log(`Received event: ${event.type}`, event.data.object);
 
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
 async function handleSessionCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId;
-
+  
   if (!userId) {
     throw new Error("User ID is missing in session metadata");
   }
@@ -61,9 +61,48 @@ async function handleSessionCompleted(session: Stripe.Checkout.Session) {
 }
 
 async function handleSubscriptionCreatedOrUpdated(subscriptionId: string) {
-  console.log("handleSubscriptionCreatedOrUpdated");
+  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
+  if (
+    subscription.status === "active" ||
+    subscription.status === "trialing" ||
+    subscription.status === "past_due"
+  ) {
+    await db.userSubscription.upsert({
+      where: {
+        userId: subscription.metadata.userId,
+      },
+      create: {
+        userId: subscription.metadata.userId,
+        stripeSubscriptionId: subscription.id,
+        stripeCustomerId: subscription.customer as string,
+        stripePriceId: subscription.items.data[0].price.id,
+        stripeCurrentPeriodEnd: new Date(
+          subscription.current_period_end * 1000
+        ),
+        stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
+      },
+      update: {
+        stripePriceId: subscription.items.data[0].price.id,
+        stripeCurrentPeriodEnd: new Date(
+          subscription.current_period_end * 1000
+        ),
+        stripeCancelAtPeriodEnd: subscription.cancel_at_period_end,
+      },
+    });
+  } else {
+    await db.userSubscription.deleteMany({
+      where: {
+        stripeCustomerId: subscription.customer as string,
+      },
+    });
+  }
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  console.log("handleSubscriptionDeleted");
+  await db.userSubscription.deleteMany({
+    where: {
+      stripeCustomerId: subscription.customer as string,
+    },
+  });
 }

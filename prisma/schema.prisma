@@ -38,11 +38,14 @@ model User {
   job      Job[]
   category Category[]
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  city      City[]
-  // Tag       Tag[]
-  bookmark  Bookmark[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  city           City[]
+
+  subscription   UserSubscription? // new
+  subscriptionId String? // new
+
+  bookmark Bookmark[]
 }
 
 model Category {
@@ -101,10 +104,6 @@ model Job {
 
   bookmarks Bookmark[]
 
-  // tag    Tag?    @relation("TagToJob", fields: [tagId], references: [id], onDelete: Cascade)
-  // tagId  String?
-  // @@index([tagId])
-
   @@index([categoryId])
   @@index([cityId])
   @@index([authorId])
@@ -126,8 +125,11 @@ model Bookmark {
 }
 
 model UserSubscription {
-  id                      String   @id @default(cuid())
-  userId                  String   @unique
+  id String @id @default(cuid())
+
+  userId String @unique // new
+  user   User   @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade) // new
+
   stripeCustomerId        String   @unique
   stripeSubscriptionId    String   @unique
   stripePriceId           String
