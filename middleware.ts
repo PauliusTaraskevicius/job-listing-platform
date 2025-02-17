@@ -8,10 +8,10 @@ const isProtectedRoute = createRouteMatcher([
   "/profilis",
   "/skelbimai",
   "/issaugoti_skelbimai",
-  "/api/stripe-webhook",
+  // "/api/stripe-webhook",
 ]);
 export default clerkMiddleware(async (auth, req) => {
-  if (!isProtectedRoute(req)) {
+  if (isProtectedRoute(req)) {
     await auth().protect();
   }
 

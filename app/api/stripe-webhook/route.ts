@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
 
-    console.log(`Received event: ${event.type}`, event.data.object);
-
     switch (event.type) {
       case "checkout.session.completed":
         await handleSessionCompleted(event.data.object);
@@ -46,7 +44,7 @@ export async function POST(req: NextRequest) {
 
 async function handleSessionCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId;
-  
+
   if (!userId) {
     throw new Error("User ID is missing in session metadata");
   }

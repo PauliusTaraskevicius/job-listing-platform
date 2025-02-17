@@ -17,7 +17,6 @@ export async function createCheckoutSession(priceId: string) {
   const session = await stripe.checkout.sessions.create({
     line_items: [{ price: priceId, quantity: 1 }],
     mode: "subscription",
-    currency: "eur",
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/nustatymai/success`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     customer: stripeCustomerId,
