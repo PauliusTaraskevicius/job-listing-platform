@@ -1,9 +1,9 @@
-// "use client";
+"use client";
 
 import Link from "next/link";
 
 import { useMedia } from "react-use";
-import { UserButton } from "@clerk/nextjs";
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
 
@@ -16,53 +16,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import CreateListingButton from "../PREMIUM/create-listing-button";
-import { auth } from "@clerk/nextjs/server";
-import { db } from "@/db";
-import { getUserSubscriptionLevel } from "../PREMIUM/subscriptions";
-import { canCreateJobListing } from "../PREMIUM/permissions";
+import { User } from "lucide-react";
 
-export const Navigation = async () => {
-  // const isMobile = useMedia("(max-width: 1024px)", false);
+export const Navigation = () => {
+  const isMobile = useMedia("(max-width: 1024px)", false);
+  const { isSignedIn } = useAuth();
 
-  // if (isMobile) {
-  //   return <MobileNavigation />;
-  // }
-
-  const { userId } = await auth();
-
-  if (!userId) {
-    return null;
+  if (isMobile) {
+    return <MobileNavigation />;
   }
-
-  const [listings, totalCount, subscriptionLevel] = await Promise.all([
-    db.job.findMany({
-      where: {
-        authorId: userId,
-      },
-      orderBy: {
-        updatedAt: "desc",
-      },
-      include: {
-        author: true,
-        category: true,
-        city: true,
-        bookmarks: true,
-      },
-    }),
-    db.job.count({
-      where: {
-        authorId: userId,
-      },
-    }),
-    getUserSubscriptionLevel(userId),
-  ]);
 
   return (
     <>
-      <div className="flex lg:hidden justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2 bg-white dark:bg-background transition-all z-10">
-        <MobileNavigation />
-      </div>
+      {isMobile && <MobileNavigation />}
+
       <div className="hidden lg:flex justify-between items-center w-full sticky inset-x-0 top-0 h-[6rem] px-2 bg-white dark:bg-background transition-all z-10">
         <Link href="/" className="flex items-center gap-1 cursor-pointer">
           <LuBriefcaseBusiness className="size-11 text-neutral-950 dark:text-white" />
@@ -85,24 +52,18 @@ export const Navigation = async () => {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Link href="/hiring">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  size="xl"
-                  className="rounded-2xl text-base bg-neutral-950 hover:bg-neutral-950/90 dark:bg-white"
-                >
-                  Talpinti skelbimą - 70&euro;
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>10 darbo skelbimų, vienam mėnesiui.</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </Link>
-          <CreateListingButton canCreate={canCreateJobListing(subscriptionLevel, totalCount)} />
+          {!isSignedIn && (
+            <Link href="/sign-in" className="flex items-center justify-center">
+              <Button
+                size="xl"
+                className="rounded-2xl text-base bg-neutral-950 hover:bg-neutral-950/90 dark:bg-white"
+
+              >
+                <User className="size-5 mr-2" />
+                Prisijungimas
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </>

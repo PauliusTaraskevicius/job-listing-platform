@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Separator } from "@/components/ui/separator";
 
-
 import { LuBriefcaseBusiness } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { FaRegFile } from "react-icons/fa";
@@ -14,13 +13,12 @@ import { LuSettings } from "react-icons/lu";
 import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "../mode-toggle";
 
 const navigationLinks = [
   {
     label: "Profilis",
     href: "/profilis/user-profile",
-    icon: <FiUser className="size-6"/>,
+    icon: <FiUser className="size-6" />,
   },
   {
     label: "Mano skelbimai",
@@ -71,9 +69,7 @@ export const SidebarNavigation = () => {
           </Button>
         ))}
       </div>
-      <div className="flex flex-col justify-center items-center p-6">
-        <ModeToggle />
-      </div>
+      <div className="flex flex-col justify-center items-center p-6" />
     </aside>
   );
 };

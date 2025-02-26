@@ -46,7 +46,7 @@ const Footer = async () => {
             {currentDate} Darbas man
           </p>
           <Link
-            href="/hiring"
+            href="#"
             className="text-sm tracking-tight text-muted-foreground"
           >
             Talpinti skelbimą

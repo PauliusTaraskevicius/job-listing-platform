@@ -3,9 +3,6 @@ import { getCities } from "@/actions/city";
 
 import { Banner } from "@/components/banner";
 import Filter from "@/components/filter";
-import { CreateCityForm } from "./(landing)/hiring/_components/forms/create-city-form";
-import { CreateCategoryForm } from "./(landing)/hiring/_components/forms/create-category-form";
-
 
 export default async function Home() {
   const categories = await getCategories();
