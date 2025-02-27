@@ -3,6 +3,8 @@ import { getCities } from "@/actions/city";
 
 import { Banner } from "@/components/banner";
 import Filter from "@/components/filter";
+import { CreateCityForm } from "./hiring/_components/forms/create-city-form";
+import { CreateCategoryForm } from "./hiring/_components/forms/create-category-form";
 
 export default async function Home() {
   const categories = await getCategories();
@@ -11,8 +13,8 @@ export default async function Home() {
   return (
     <div className="flex flex-col justify-center items-center h-full">
       <Banner />
-      {/* <CreateCityForm /> */}
-      {/* <CreateCategoryForm /> */}
+      <CreateCityForm />
+      <CreateCategoryForm />
       <Filter categoriesData={categories.data} citiesData={cities.data} />
     </div>
   );
