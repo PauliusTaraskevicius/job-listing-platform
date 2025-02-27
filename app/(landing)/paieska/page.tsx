@@ -5,13 +5,13 @@ type Searchprops = {
   searchParams: Promise<{ q: string }>;
 };
 
-export function generateMetaData({
-  searchParams: { q },
-}: Searchprops): Metadata {
-  return {
-    title: `Search results for "${q}`,
-  };
-}
+// export function generateMetaData({
+//   searchParams: { q },
+// }: Searchprops): Metadata {
+//   return {
+//     title: `Search results for "${q}`,
+//   };
+// }
 
 export default async function Search(props: Searchprops) {
   const searchParams = await props.searchParams;
