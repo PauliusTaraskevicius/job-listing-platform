@@ -203,7 +203,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
         <form
           onSubmit={handleSubmit}
           method="GET"
-          action="/search"
+          action="/paieska"
           className="w-1/2"
         >
           <div className="relative">
@@ -232,7 +232,7 @@ const Filter = ({ categoriesData, citiesData }: Props) => {
                   size="icon"
                   className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform"
                 >
-                  <XIcon className=" text-muted-foreground" />
+                  <XIcon className="text-muted-foreground" />
                 </Button>
               </>
             )}
