@@ -309,7 +309,7 @@ export const CreateJobForm = ({ categories, cities }: Props) => {
             )}
           />
           <Button disabled={isPending} type="submit" className="w-full">
-            Talpinti skelbimą - 70&euro;
+            Talpinti skelbimą
           </Button>
         </form>
       </Form>

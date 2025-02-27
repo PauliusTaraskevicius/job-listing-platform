@@ -47,7 +47,6 @@ type Props = {
 };
 
 export const EditJobForm = ({ job, categories, cities }: Props) => {
-
   const form = useForm<z.infer<typeof createJobSchema>>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
@@ -60,8 +59,8 @@ export const EditJobForm = ({ job, categories, cities }: Props) => {
       remote: job!.remote!!,
       premium: job!.premium!!,
 
-      categoryId: '',
-      cityId: '',
+      categoryId: "",
+      cityId: "",
     },
   });
 
@@ -292,7 +291,7 @@ export const EditJobForm = ({ job, categories, cities }: Props) => {
             )}
           />
           <Button disabled={mutation.isPending} type="submit">
-            Submit
+            Redaguoti skelbimą
           </Button>
         </form>
       </Form>
