@@ -103,6 +103,7 @@ export const getJobById = async (id: string) => {
         category: true,
         city: true,
         author: true,
+        bookmarks: true,
       },
     });
 
@@ -199,6 +200,7 @@ export const editJobListing = async (id: string, values: jobType) => {
         include: {
           category: true,
           city: true,
+          bookmarks: true,
         },
       });
 
