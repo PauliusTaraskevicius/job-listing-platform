@@ -42,7 +42,7 @@ export const Navigation = () => {
               <TooltipTrigger>
                 {" "}
                 <UserButton
-                  appearance={{ elements: { avatarBox: "size-9" } }}
+                  appearance={{ elements: { avatarBox: "size-10" } }}
                   userProfileUrl="/profilis/user-profile"
                   userProfileMode="navigation"
                 />

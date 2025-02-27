@@ -8,8 +8,8 @@ import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import { createCheckoutSession } from "@/actions/subscriptions";
 
-const premiumFeatures = ["AI tools", "Up to 3 listings"];
-const premiumPlusFeatures = ["Infinite resumes", "Design customizations"];
+const premiumFeatures = ["1 skelbimas"];
+const premiumPlusFeatures = ["Neribotas kiekis skelbimų"];
 
 const PremiumModal = () => {
   const { open, setOpen } = usePremiumModal();
@@ -45,13 +45,19 @@ const PremiumModal = () => {
     >
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Resume Builder AI Premium</DialogTitle>
+          <DialogTitle>&apos;Darbas man&apos; skelbimų prenumeratos</DialogTitle>
         </DialogHeader>
         <div className="space-y-6">
-          <p>Get a premium subscription to unlock more features.</p>
+          <p>
+            Įsigykite{" "}
+            <span className="font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+              premium plus
+            </span>{" "}
+            prenumeratą, norėdami kelti neribota kiekį skelbimų.
+          </p>
         </div>
         <div className="flex">
-          <div className="flex w-1/2 flex-col space-y-5">
+          <div className="flex w-1/2 flex-col space-y-5 justify-between">
             <h3 className="text-center text-lg font-bold">Premium</h3>
             <ul className="list-inside space-y-2">
               {premiumFeatures.map((feature) => (
@@ -69,7 +75,7 @@ const PremiumModal = () => {
                 )
               }
             >
-              Get Premium
+              Įsigykite Premium prenumeratą
             </Button>
           </div>
           <div className="border-l mx-6" />
@@ -93,7 +99,7 @@ const PremiumModal = () => {
                 )
               }
             >
-              Get Premium Plus
+              Get Premium Plus prenumeratą
             </Button>
           </div>
         </div>

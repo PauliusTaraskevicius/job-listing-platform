@@ -20,7 +20,7 @@ export default function CreateListingButton({
       <Button asChild className="mx-auto flex w-fit gap-2">
         <Link href="/hiring">
           <PlusSquare className="size-5" />
-          New listing
+          Įkelti skelbimą
         </Link>
       </Button>
     );
@@ -32,7 +32,7 @@ export default function CreateListingButton({
       className="mx-auto flex w-fit gap-2"
     >
       <PlusSquare className="size-5" />
-      New listing
+      Įkelti skelbimą
     </Button>
   );
 }
