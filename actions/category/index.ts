@@ -3,7 +3,6 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
-import { NextResponse } from "next/server";
 import { categoryType } from "./type";
 import { Category } from "@prisma/client";
 
@@ -11,7 +10,7 @@ export const createCategory = async (data: categoryType) => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   const { title, slug } = data;
@@ -28,9 +27,7 @@ export const createCategory = async (data: categoryType) => {
     return { data: category };
   } catch (error) {
     console.log("[CREATE_CATEGORY]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -48,18 +45,13 @@ export const getCategories = async () => {
     return { data: categories };
   } catch (error) {
     console.log("[GET_CATEGORIES]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
 export const getCategoryBySlug = async (slug: string) => {
   const { userId } = auth();
 
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
   try {
     const category = await db.category.findUnique({
       where: { slug },
@@ -67,11 +59,13 @@ export const getCategoryBySlug = async (slug: string) => {
         jobs: {
           include: {
             author: true,
-            bookmarks: {
-              where: {
-                authorId: userId,
-              },
-            },
+            bookmarks: userId
+              ? {
+                  where: {
+                    authorId: userId,
+                  },
+                }
+              : false,
             category: true,
             city: true,
           },
@@ -86,8 +80,6 @@ export const getCategoryBySlug = async (slug: string) => {
     return category;
   } catch (error) {
     console.log("[GET_CATEGORY_BY_SLUG]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };

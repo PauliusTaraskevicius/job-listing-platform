@@ -3,15 +3,14 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
-import { NextResponse } from "next/server";
 import { cityType } from "./type";
-import { Category, City } from "@prisma/client";
+import { City } from "@prisma/client";
 
 export const createCity = async (data: cityType) => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   const { cityTitle, slug } = data;
@@ -28,9 +27,7 @@ export const createCity = async (data: cityType) => {
     return { data: city };
   } catch (error) {
     console.log("[CREATE_CITY]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -48,18 +45,13 @@ export const getCities = async () => {
     return { data: cities };
   } catch (error) {
     console.log("[GET_CITIES]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
 export const getCityBySlug = async (slug: string) => {
   const { userId } = auth();
 
-  if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
-  }
   try {
     const city = await db.city.findUnique({
       where: { slug },
@@ -67,11 +59,13 @@ export const getCityBySlug = async (slug: string) => {
         jobs: {
           include: {
             author: true,
-            bookmarks: {
-              where: {
-                authorId: userId,
-              },
-            },
+            bookmarks: userId
+              ? {
+                  where: {
+                    authorId: userId,
+                  },
+                }
+              : false,
             category: true,
             city: true,
           },
@@ -86,8 +80,6 @@ export const getCityBySlug = async (slug: string) => {
     return city;
   } catch (error) {
     console.log("[GET_CITY_BY_SLUG]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };

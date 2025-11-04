@@ -3,7 +3,6 @@
 import { auth } from "@clerk/nextjs/server";
 
 import { db } from "@/db";
-import { NextResponse } from "next/server";
 import { jobType } from "./type";
 import { Job } from "@prisma/client";
 import { createJobSchema } from "./validation";
@@ -16,7 +15,7 @@ export const createJob = async (data: jobType) => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   const subscriptionLevel = await getUserSubscriptionLevel(userId);
@@ -66,9 +65,7 @@ export const createJob = async (data: jobType) => {
     return { data: job };
   } catch (error) {
     console.log("[CREATE_JOB]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -89,9 +86,7 @@ export const getJobs = async () => {
     return { data: jobs };
   } catch (error) {
     console.log("[GET_JOBS]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -110,9 +105,7 @@ export const getJobById = async (id: string) => {
     return job;
   } catch (error) {
     console.log("[GET_JOB_BY_ID]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -120,7 +113,7 @@ export const getUserJobs = async () => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   try {
@@ -142,9 +135,7 @@ export const getUserJobs = async () => {
     return { data: jobs };
   } catch (error) {
     console.log("[GET_USER_JOBS]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -152,7 +143,7 @@ export const deleteJobListing = async (id: string) => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   try {
@@ -160,12 +151,10 @@ export const deleteJobListing = async (id: string) => {
       where: { id },
     });
 
-    if (!job) throw new NextResponse("Skelbimas nerastas", { status: 401 });
+    if (!job) throw new Error("Skelbimas nerastas");
 
     if (job.authorId !== userId)
-      throw new NextResponse("Skelbimą ištrinti gali tik autorius.", {
-        status: 401,
-      });
+      throw new Error("Skelbimą ištrinti gali tik autorius.");
 
     const deleteJob = await db.job.delete({
       where: { id },
@@ -177,9 +166,7 @@ export const deleteJobListing = async (id: string) => {
     return deleteJob;
   } catch (error) {
     console.log("[DELETE_JOB_LISTING]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -189,7 +176,7 @@ export const editJobListing = async (id: string, values: jobType) => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   try {
@@ -210,9 +197,7 @@ export const editJobListing = async (id: string, values: jobType) => {
     return updatedJob;
   } catch (error) {
     console.log("[EDIT_JOB_LISTING]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -221,7 +206,7 @@ export const createBookmark = async (jobId: string) => {
     const { userId } = auth();
 
     if (!userId) {
-      throw new NextResponse("Vartotojas nerastas", { status: 401 });
+      throw new Error("Vartotojas nerastas");
     }
 
     const bookmark = await db.bookmark.upsert({
@@ -247,9 +232,7 @@ export const createBookmark = async (jobId: string) => {
     return data;
   } catch (error) {
     console.log("[CREATE_BOOKMARK]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -258,7 +241,7 @@ export const deleteBookmark = async (jobId: string) => {
     const { userId } = auth();
 
     if (!userId) {
-      throw new NextResponse("Vartotojas nerastas", { status: 401 });
+      throw new Error("Vartotojas nerastas");
     }
 
     const deleteBookmark = await db.bookmark.deleteMany({
@@ -273,9 +256,7 @@ export const deleteBookmark = async (jobId: string) => {
     return deleteBookmark;
   } catch (error) {
     console.log("[DELETE_BOOKMARK]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -283,7 +264,7 @@ export const getUserJobsWithBookmarks = async () => {
   const { userId } = auth();
 
   if (!userId) {
-    throw new NextResponse("Vartotojas nerastas", { status: 401 });
+    throw new Error("Vartotojas nerastas");
   }
 
   try {
@@ -309,9 +290,7 @@ export const getUserJobsWithBookmarks = async () => {
     return bookmarks;
   } catch (error) {
     console.log("[GET_USER_JOBS_WITH_BOOKMARKS]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
 
@@ -366,8 +345,6 @@ export const search = async (name: string) => {
     return searchData;
   } catch (error) {
     console.log("[SEARCH]", error);
-    throw new NextResponse("Įvyko klaida. Bandykite dar kartą.", {
-      status: 500,
-    });
+    throw new Error("Įvyko klaida. Bandykite dar kartą.");
   }
 };
